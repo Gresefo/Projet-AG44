@@ -1,0 +1,6 @@
+#ifndef EDGE_H_INCLUDED
+#define EDGE_H_INCLUDED
+
+
+
+#endif // EDGE_H_INCLUDED

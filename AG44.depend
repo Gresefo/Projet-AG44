@@ -1,0 +1,29 @@
+# depslib dependency file v1.0
+1541524976 source:/home/users/cmenier/Documents/AG44/edge.cpp
+	"edge.h"
+
+1541525141 source:/home/users/cmenier/Documents/AG44/graph.cpp
+	<fstream>
+	<iostream>
+	<string>
+	"graph.h"
+
+1541518996 source:/home/users/cmenier/Documents/AG44/heap.cpp
+
+1541525153 source:/home/users/cmenier/Documents/AG44/vertex.cpp
+	"vertex.h"
+
+1541525073 /home/users/cmenier/Documents/AG44/graph.h
+	<vector>
+	"vertex.h"
+	"edge.h"
+
+1541523639 source:/home/users/cmenier/Documents/AG44/main.cpp
+	<iostream>
+	"graph.h"
+
+1541524950 /home/users/cmenier/Documents/AG44/vertex.h
+
+1541524989 /home/users/cmenier/Documents/AG44/edge.h
+	"vertex.h"
+
