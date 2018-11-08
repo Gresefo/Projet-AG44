@@ -1,6 +1,6 @@
-#include "vertex.h"
+#include "Vertex.h"
 
-vertex::vertex(int _id,int _x,int _y){
+Vertex::Vertex(int _id,int _x,int _y){
     this->id =_id;
     this->x =_x;
     this->y =_y;

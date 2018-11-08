@@ -3,13 +3,12 @@
 
 #include <vector>
 
-#include "vertex.h"
-#include "edge.h"
+#include "Edge.h"
 
 
 using namespace std;
 
-class graph
+class Graph
 {
     public:
 
@@ -18,14 +17,14 @@ class graph
     int type_graph;  // orienter ou pas
     int type_structure;  // list ou matrice
 
-    vertex *listvertex;    //V
-    edge *listedge;    //E
+    Vertex *listvertex;    //V
+    Edge *listedge;    //E
 
     int ** matadj;
     vector<vector<int> > lstadj;
 
 
-    graph();
+    Graph();
 
     void file2graph();
 

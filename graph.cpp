@@ -1,17 +1,12 @@
-#ifndef GRAPH_CPP_INCLUDED
-#define GRAPH_CPP_INCLUDED
-
 #include <fstream>
 #include <iostream>
 #include <string>
 
-#include "graph.h"
+#include "Graph.h"
 
 using namespace std;
 
-#endif // GRAPH_CPP_INCLUDED
-
-graph::graph(){
+Graph::Graph(){
 
     nb_vertex=0;
     nb_edge=0;
@@ -22,22 +17,22 @@ graph::graph(){
 }
 
 //std::stoi(string, nullptr , 10)
-void graph::file2graph(){
-     string mon_fichier = "test.txt";  // je stocke dans la chaîne mon_fichier le nom du fichier à ouvrir
+void Graph::file2graph(){
+    string mon_fichier = "test.txt";  // je stocke dans la chaîne mon_fichier le nom du fichier à ouvrir
     string line;
-     ifstream fichier(mon_fichier.c_str(), ios::in);
+    ifstream fichier(mon_fichier.c_str(), ios::in);
 
-     if(fichier)  // si l'ouverture a réussi
+    if(fichier)  // si l'ouverture a réussi
 
-     {
+    {
 
-          // instructions
-            getline(fichier,line);
-            fichier.close();  // je referme le fichier
+        // instructions
+        getline(fichier,line);
+        fichier.close();  // je referme le fichier
 
-     }
+    }
 
-     else  // sinon
+    else  // sinon
 
-            cerr << "Erreur à l'ouverture !" << endl;
+        cerr << "Erreur à l'ouverture !" << endl;
 }
