@@ -1,9 +1,8 @@
 #include "Graph.h"
 
 
-//std::stoi(string, nullptr , 10)
-void Graph::fileToGraph(){
-    string myFile = "fileGraph.txt";  // I store in the string myFile the name of the file to open
+void Graph::fileToGraph(string myfile)
+{
     string line;
     ifstream fichier(myFile.c_str(), ios::in);
 
@@ -11,7 +10,7 @@ void Graph::fileToGraph(){
     {
         //The number of Vertices
         getline(fichier,line);
-        nb_vertex = stoi(line, nullptr, 10);  // stoi() convert a string in an int
+        nb_vertex = atoi(line.c_str());  // atoi() convert a string in an int
         if (nb_vertex < 0)
         {
             cerr << "Error: the number of vertex in the file is negative !" << endl;
@@ -34,6 +33,39 @@ void Graph::fileToGraph(){
             isMatrix = false;
         else
             cerr << "Error: the file does not indicate correctly if it use an adjency list or matrix !" << endl;
+
+
+        if (isDirected)
+        {
+            // Filling the adjency matrix datas
+            if (isMatrix)
+            {
+                while (getline(fichier,line))
+                {
+                    
+                }
+            }
+
+            //Filling the adjency list datas
+            else
+            {
+                
+            }
+        }
+        else
+        {
+            //Filling the adjency matrix datas
+            if (isMatrix)
+            {
+
+            }
+
+            //Filling the adjency list datas
+            else
+            {
+
+            }
+        }
 
 
 

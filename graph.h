@@ -5,11 +5,13 @@
 #include <fstream>
 #include <iostream>
 #include <string>
+#include <stdlib.h>
+#include <stdio.h>
+
+using namespace std;
 
 #include "Edge.h"
 
-
-using namespace std;
 
 class Graph
 {
@@ -27,10 +29,13 @@ private:
     vector<vector<int> > adjencyMactrix;
 
 public:
+    // Constructor without a file
+    Graph(): nb_vertex(0), nb_edge(0), isDirected(0), isMatrix(0), listVertex(NULL), listEdge(NULL), adjencyList(NULL){};
+    // Constructor with a file, and the variable "myFile" contains the name of the file
+    Graph(string myFile): nb_vertex(0), nb_edge(0), isDirected(0), isMatrix(0), listVertex(NULL), listEdge(NULL), adjencyList(NULL)
+        {fileToGraph(myFile);};
 
-    Graph(): nb_vertex(0), nb_edge(0), isDirected(0), isMatrix(0), listVertex(NULL), listEdge(NULL), adjencyList(NULL){fileToGraph();};
-
-    void fileToGraph();
+    void fileToGraph(string myFile);
 
 };
 

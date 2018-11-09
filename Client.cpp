@@ -7,7 +7,8 @@ using namespace std;
 
 int main()
 {
-	Graph *g = new(Graph);
+	// Creation of an undirected graph (with a adjency matrix) using the file name "exampleUndirectedMatrix"
+	Graph("exampleUndirectedMatrix.txt") g; 
 
 
 	
