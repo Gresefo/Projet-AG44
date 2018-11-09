@@ -34,7 +34,7 @@ void Graph::fileToGraph(string myfile)
         else
             cerr << "Error: the file does not indicate correctly if it use an adjency list or matrix !" << endl;
 
-
+        char *temp = NULL;
         if (isDirected)
         {
             // Filling the adjency matrix datas
@@ -42,7 +42,12 @@ void Graph::fileToGraph(string myfile)
             {
                 while (getline(fichier,line))
                 {
-                    
+                    temp = strtok (line,",;");
+                    while (temp != NULL)
+                    {
+                        temp = strtok (NULL, ",;");
+
+                    }
                 }
             }
 

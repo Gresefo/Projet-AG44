@@ -1,6 +1,0 @@
-#ifndef VERTEX_H_INCLUDED
-#define VERTEX_H_INCLUDED
-
-
-
-#endif // VERTEX_H_INCLUDED
