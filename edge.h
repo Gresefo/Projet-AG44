@@ -3,13 +3,15 @@
 
 #include "Vertex.h"
 
-class Edge{
-    public:
+class Edge
+{
+private:
     //attributs
     Vertex *src,*dst;
     int id;
     int w;
 
+public:
     //Constructeur
 
     Edge(Vertex *src, Vertex *dst, int w=1);
