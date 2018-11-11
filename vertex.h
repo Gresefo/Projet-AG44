@@ -8,7 +8,7 @@ class Vertex
     int id;
     int x,y;
 
-    Vertex(int _id,int _x=0,int _y=0);
+    Vertex(int _id): id(_id), x(0), y(0){};
 };
 
 #endif // VERTEX_H_INCLUDED
