@@ -44,7 +44,7 @@ void Graph::fileToGraph()
 
                 while (getline(fichier,line))
                 {
-
+                    //j'y arrive pas, meme avec strtok() 
                 }
             }
 

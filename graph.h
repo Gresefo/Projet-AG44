@@ -1,15 +1,6 @@
 #ifndef GRAPH_H_INCLUDED
 #define GRAPH_H_INCLUDED
 
-#include <vector>
-#include <fstream>
-#include <iostream>
-#include <string>
-#include <cstring>  // Used for strtok()
-#include <stdlib.h>
-#include <stdio.h>
-
-using namespace std;
 
 #include "Edge.h"
 
@@ -37,7 +28,7 @@ public:
     void fileToGraph();
 
     // Ostream function
-    friend ostream& operator<<(ostream &o, const Graph &g);
+    friend ostream& operator<<(ostream &os, const Graph &g);
 
 };
 
