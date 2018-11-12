@@ -6,17 +6,18 @@
 class Edge
 {
 private:
-    //attributs
     Vertex *src,*dst;
     int id;
-    int w;
+    int weight;
 
 public:
-    //Constructeur
+    // Constructor
+    Edge(Vertex *_src, Vertex *_dst): src(_src), dst(_dst), weight(1){};
+    Edge(const Edge &v);
 
-    Edge(Vertex *src, Vertex *dst, int w=1);
-
-    //Methodes
+    // Destructor, we consider that destroying an Edge doesn't affect the Vertexes
+    inline ~Edge(){src = NULL;dst = NULL;};
+   
 
 
 };

@@ -27,6 +27,9 @@ public:
     //Function that reads a file in order to create a graph
     void fileToGraph();
 
+    //Destructor
+
+
     // Ostream function
     friend ostream& operator<<(ostream &os, const Graph &g);
 
