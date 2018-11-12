@@ -14,15 +14,15 @@ private:
     bool isDirected;  // A boolean to know if the graph is directed (1) or not (0)
     bool isMatrix;  // A boolean to know if the structure of the graph is describe by a list (0) or by a matrix (1)
 
-    Vertex *listVertex;    //V
-    Edge *listEdge;    //E
+    vector<Vertex*> listVertex; // The Graph's Vertex list
+    vector<Edge*> listEdge; // The Graph's Edge list
 
-    int ** adjencyList;
+    vector<vector<int> > adjencyList;
     vector<vector<int> > adjencyMactrix;
 
 public:
     // Constructor with a file
-    Graph(): nbVertex(0), nbEdge(0), isDirected(0), isMatrix(0), listVertex(NULL), listEdge(NULL), adjencyList(NULL){fileToGraph();}
+    Graph(): nbVertex(0), nbEdge(0), isDirected(0), isMatrix(0){fileToGraph();}
 
     //Function that reads a file in order to create a graph
     void fileToGraph();

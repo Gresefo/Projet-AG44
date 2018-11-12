@@ -95,18 +95,26 @@ ostream& operator<<(ostream& os, const Graph& g)
     else
         os << "defined by an adjency list :" << endl;
 
-    if (g.listVertex == NULL)
+    if (g.listVertex.empty())
         os << "The list of vertexes is empty !" << endl;
     else
     {
-         
+        for (int i = 0; i < g.listVertex.size(); i++)
+        {
+            os << "V" << g.listVertex[i]->getId() << ", ";
+        }
+        os << endl;
     }
 
-    if (g.listEdge == NULL)
+    if (g.listEdge.empty())
         os << "The list of Edges is empty !" << endl;
     else
     {
-        
+        for (int i = 0; i < g.listEdge.size(); i++)
+        {
+            os << "E" << i+1 << "(V" << g.listEdge[i]->getSrc()->getId() << ";V" << g.listEdge[i]->getDst()->getId() << "), ";
+        }
+        os << endl;
     }
 
 

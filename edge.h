@@ -17,6 +17,9 @@ public:
 
     // Destructor, we consider that destroying an Edge doesn't affect the Vertexes
     inline ~Edge(){src = NULL;dst = NULL;};
+
+    Vertex* getSrc(){return src;};
+    Vertex* getDst(){return dst;};
    
 
 
