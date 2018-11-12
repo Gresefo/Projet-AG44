@@ -96,9 +96,10 @@ ostream& operator<<(ostream& os, const Graph& g)
         os << "defined by an adjency list :" << endl;
 
     if (g.listVertex.empty())
-        os << "The list of vertexes is empty !" << endl;
+        os << "The list of Vertexes is empty !" << endl;
     else
     {
+        os << "Vertex list: ";
         for (int i = 0; i < g.listVertex.size(); i++)
         {
             os << "V" << g.listVertex[i]->getId() << ", ";
@@ -112,9 +113,18 @@ ostream& operator<<(ostream& os, const Graph& g)
     {
         for (int i = 0; i < g.listEdge.size(); i++)
         {
-            os << "E" << i+1 << "(V" << g.listEdge[i]->getSrc()->getId() << ";V" << g.listEdge[i]->getDst()->getId() << "), ";
+            os << "E" << g.listEdge[i]->getId() << "(V" << g.listEdge[i]->getSrc()->getId() << ";V" << g.listEdge[i]->getDst()->getId() << "), ";
         }
         os << endl;
+    }
+
+    if (g.isMatrix)
+    {
+
+    }
+    else
+    {
+
     }
 
 

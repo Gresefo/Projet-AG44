@@ -17,8 +17,13 @@ private:
     int id, x, y;
 
 public:
+	// Constructor
     Vertex(int _id): id(_id), x(0), y(0){};
+
+    // Getters
     int getId(){return id;};
+    int getX(){return x;};
+    int getY(){return y;};
 
 
 

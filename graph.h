@@ -1,9 +1,7 @@
 #ifndef GRAPH_H_INCLUDED
 #define GRAPH_H_INCLUDED
 
-
 #include "Edge.h"
-
 
 class Graph
 {
@@ -29,6 +27,15 @@ public:
 
     //Destructor
 
+
+    // Getters
+    int getNbVertex(){return nbVertex;};
+    bool getIsDirected(){return isDirected;};
+    bool getIsMatrix(){return isMatrix;};
+    vector<Vertex*> getListVertex(){return listVertex;};
+
+    // Add a Vertex at the end of the list
+    void addVertex(Vertex* v){listVertex.push_back(v);};
 
     // Ostream function
     friend ostream& operator<<(ostream &os, const Graph &g);
