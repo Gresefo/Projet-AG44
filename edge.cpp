@@ -9,6 +9,6 @@ Edge::Edge(const Edge &v)
 
 ostream& operator<<(ostream& os, const Edge &e)
 {
-	os << "E" << e.getId() << "(V" << (*e.getSrc()).getId() << ";V" << (*e.getDst()).getId() << ";w=" << e.getWeight() << ")";
+	os << "E" << e.id << "(V" << (*e.src).getId() << ";V" << (*e.dst).getId() << ";w=" << e.weight << ")";
 	return os;
 }	

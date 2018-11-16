@@ -19,6 +19,7 @@ int main()
 	g.addVertex(&v2);
 	g.addVertex(&v3);
 	g.addVertex(&v4);
+	
 	cout << g << endl;
 
 
