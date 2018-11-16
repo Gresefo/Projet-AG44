@@ -121,13 +121,42 @@ ostream& operator<<(ostream& os, const Graph& g)
 
     if (g.isMatrix)
     {
-
+        cout << "Adjency matrix :" << endl;
+        for (int i = 0; i < g.nbVertex; i++)
+        {
+            for (int j = 0; j < g.nbVertex; j++)
+            {
+                cout << g.adjencyMatrix[i][j] << ",";
+            }
+            cout << endl;
+        }
     }
     else
     {
+        cout << "Adjency list :" << endl;
+        for (int i = 0; i < g.nbVertex; i++)
+        {
+
+        }
 
     }
 
 
     return os;
+}
+
+void Graph::addEdge(Edge* e)
+{
+    listEdge.push_back(e);
+    if (isMatrix)   // Cette fonction est elle necessaire ou est ce qu'on modifiera un graph uniquement à partir du fichier ????
+    {
+        if (isDirected)
+        {
+
+        }
+        else
+        {
+
+        }
+    }
 }

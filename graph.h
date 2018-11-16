@@ -16,7 +16,7 @@ private:
     vector<Edge*> listEdge; // The Graph's Edge list
 
     vector<vector<int> > adjencyList;
-    vector<vector<int> > adjencyMactrix;
+    vector<vector<int> > adjencyMatrix;
 
 public:
     // Constructor with a file
@@ -38,7 +38,7 @@ public:
     void addVertex(Vertex* v){listVertex.push_back(v);};
 
 	// Add a Edge at the end of the list
-	void addEdge(Edge* e){listEdge.push_back(e);};
+	void addEdge(Edge* e);
 
     // Ostream function
     friend ostream& operator<<(ostream &os, const Graph &g);
