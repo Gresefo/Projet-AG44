@@ -19,18 +19,18 @@ void Graph::fileToGraph()
 
         //If the graph is directed or not
         getline(fichier,line);
-        if (line.compare("o"))
+        if (line.compare("o") == 0)		// string.compare() == 0 if it is the same string
             isDirected = true;
-        else if (line.compare("n"))
+        else if (line.compare("n") == 0)
             isDirected = false;
         else
             cerr << "Error: the file does not correctly indicate if the graph is directed or not !" << endl;
 
         //If the graph is described by a adjency list or matrix 
         getline(fichier,line);
-        if (line.compare("m"))
+        if (line.compare("m") == 0)
             isMatrix = true;
-        else if (line.compare("l"))
+        else if (line.compare("l") == 0)
             isMatrix = false;
         else
             cerr << "Error: the file does not indicate correctly if it use an adjency list or matrix !" << endl;
@@ -100,9 +100,9 @@ ostream& operator<<(ostream& os, const Graph& g)
     else
     {
         os << "Vertex list: ";
-        for (int i = 0; i < g.listVertex.size(); i++)
+        for (unsigned int i = 0; i < g.listVertex.size(); i++)
         {
-            os << "V" << g.listVertex[i]->getId() << ", ";
+            os << *g.listVertex[i] << ", ";
         }
         os << endl;
     }
@@ -111,9 +111,10 @@ ostream& operator<<(ostream& os, const Graph& g)
         os << "The list of Edges is empty !" << endl;
     else
     {
-        for (int i = 0; i < g.listEdge.size(); i++)
+        for (unsigned int i = 0; i < g.listEdge.size(); i++)
         {
-            os << "E" << g.listEdge[i]->getId() << "(V" << g.listEdge[i]->getSrc()->getId() << ";V" << g.listEdge[i]->getDst()->getId() << "), ";
+			cout << "Edge list: ";
+            os << *g.listEdge[i] << ", ";
         }
         os << endl;
     }
