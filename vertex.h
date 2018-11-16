@@ -20,10 +20,13 @@ public:
 	// Constructor
     Vertex(int _id): id(_id), x(0), y(0){};
 
+	// Destructor
+	~Vertex(){};
+
     // Getters
-    int getId(){return id;};
-    int getX(){return x;};
-    int getY(){return y;};
+    int getId() const {return id;};
+    int getX() const {return x;};
+    int getY() const {return y;};
 
 
 

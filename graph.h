@@ -37,6 +37,9 @@ public:
     // Add a Vertex at the end of the list
     void addVertex(Vertex* v){listVertex.push_back(v);};
 
+	// Add a Edge at the end of the list
+	void addEdge(Edge* e){listEdge.push_back(e);};
+
     // Ostream function
     friend ostream& operator<<(ostream &os, const Graph &g);
 
