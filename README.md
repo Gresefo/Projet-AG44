@@ -2,6 +2,16 @@
 
 ********************************
 
+Chemin pour trouver le projet dans l'ordi de Corentin:
+
+Portable:
+cd /mnt/c/Users/temp/Documents/GitHub/Projet-AG44/
+
+Fixe:
+cd /mnt/d/GitHub/Projet-AG44/
+
+********************************
+
 Chemin pour trouver le projet dans l'ordi de Loïc :
 cd /mnt/c/Users/loic-/OneDrive/Documents/GitHub/Projet-AG44/
 
@@ -17,8 +27,8 @@ Sans recompiler :
 ********************************
 
 Pour debugger:
-	gdb nomFichier -q
-Dans notre cas nomFichier est surement "Graph"
+	gdb Graph -q
+
 Attention le fichier Graph doit exister, donc il faut avoir réussit la compilation
 
 Sortir du mode débugger:

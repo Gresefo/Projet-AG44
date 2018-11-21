@@ -14,19 +14,17 @@ using namespace std;
 class Vertex
 {
 private:
-    int id, x, y;
+    int id;
 
 public:
 	// Constructor
-    Vertex(int _id): id(_id), x(0), y(0){};
+    Vertex(int _id): id(_id){};
 
 	// Destructor
 	~Vertex(){};
 
     // Getters
     int getId() const {return id;};
-    int getX() const {return x;};
-    int getY() const {return y;};
 
 
 

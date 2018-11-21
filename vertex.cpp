@@ -2,6 +2,6 @@
 
 ostream& operator<<(ostream& os, const Vertex &v)
 {
-	os << "V" << v.id << "[" << v.x << ";" << v.y << "]";
+	os << "V" << v.id;
 	return os;
 }

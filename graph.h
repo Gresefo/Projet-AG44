@@ -20,10 +20,10 @@ private:
 
 public:
     // Constructor with a file
-    Graph(): nbVertex(0), nbEdge(0), isDirected(0), isMatrix(0){fileToGraph();}
+    Graph(): nbVertex(0), nbEdge(0), isDirected(0), isMatrix(0){};
 
     //Function that reads a file in order to create a graph
-    void fileToGraph();
+    void fileToGraph(string myFile);
 
     //Destructor
 

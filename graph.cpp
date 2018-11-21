@@ -1,9 +1,8 @@
 #include "Graph.h"
 
 
-void Graph::fileToGraph()
+void Graph::fileToGraph(string myFile)
 {
-    string myFile = "exampleUndirectedMatrix.txt";
     string line;
     ifstream fichier(myFile.c_str(), ios::in);
 
@@ -35,41 +34,41 @@ void Graph::fileToGraph()
         else
             cerr << "Error: the file does not indicate correctly if it use an adjency list or matrix !" << endl;
 
+        // Filling the adjency matrix or list datas
+        int i = 0;
+        char* cstr = NULL;
+        char* token = NULL;
+        vector<int> tmp;
 
-        if (isDirected)
+        while(getline(fichier,line))
         {
-            // Filling the adjency matrix datas
-            if (isMatrix)
+            cstr = new char[line.length()];
+            strcpy(cstr, line.c_str());
+            token = strtok(cstr, ",; ");
+            while(token != NULL)
             {
-
-                while (getline(fichier,line))
+                i = atoi(token);
+                if(i >= 0)
                 {
-                    //j'y arrive pas, meme avec strtok() 
+                    tmp.push_back(i);
                 }
-            }
+                else
+                {
+                    cerr << "Error, there is a negative number !" << endl;
+                }
+                token = strtok(NULL, ",; ");
 
-            //Filling the adjency list datas
-            else
-            {
-                
             }
-        }
-        else
-        {
-            //Filling the adjency matrix datas
+            delete cstr;
+            cstr = NULL;
+
             if (isMatrix)
-            {
-
-            }
-
-            //Filling the adjency list datas
+                adjencyMatrix.push_back(tmp);
             else
-            {
+                adjencyList.push_back(tmp);
 
-            }
+            tmp.clear();
         }
-
-
 
         fichier.close();  // closing of the file
     }
@@ -91,15 +90,15 @@ ostream& operator<<(ostream& os, const Graph& g)
         os << "It is a non directed graph ";
 
     if (g.isMatrix)
-        os << "defined by an adjency matrix :" << endl;
+        os << "defined by an adjency matrix." << endl;
     else
-        os << "defined by an adjency list :" << endl;
+        os << "defined by an adjency list." << endl;
 
     if (g.listVertex.empty())
-        os << "The list of Vertexes is empty !" << endl;
+        os << endl << "The list of Vertexes is empty !" << endl;
     else
     {
-        os << "Vertex list: ";
+        os << endl << "Vertex list: ";
         for (unsigned int i = 0; i < g.listVertex.size(); i++)
         {
             os << *g.listVertex[i] << ", ";
@@ -108,25 +107,24 @@ ostream& operator<<(ostream& os, const Graph& g)
     }
 
     if (g.listEdge.empty())
-        os << "The list of Edges is empty !" << endl;
+        os << endl << "The list of Edges is empty !" << endl;
     else
     {
+		cout << endl << "Edge list: " << endl;
         for (unsigned int i = 0; i < g.listEdge.size(); i++)
         {
-			cout << "Edge list: ";
-            os << *g.listEdge[i] << ", ";
+            os << *g.listEdge[i] << endl;
         }
-        os << endl;
     }
 
     if (g.isMatrix)
     {
-        cout << "Adjency matrix :" << endl;
+        cout << endl << "Adjency matrix :" << endl;
         for (int i = 0; i < g.nbVertex; i++)
         {
             for (int j = 0; j < g.nbVertex; j++)
             {
-                cout << g.adjencyMatrix[i][j] << ",";
+                cout << g.adjencyMatrix[i][j] << " ";
             }
             cout << endl;
         }
@@ -136,7 +134,11 @@ ostream& operator<<(ostream& os, const Graph& g)
         cout << "Adjency list :" << endl;
         for (int i = 0; i < g.nbVertex; i++)
         {
-
+            for (unsigned int j = 0; j < g.adjencyList[i].size(); j++)
+            {
+                cout << g.adjencyList[i][j] << "->";
+            }
+            cout << endl;
         }
 
     }
