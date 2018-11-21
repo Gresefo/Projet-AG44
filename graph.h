@@ -12,8 +12,8 @@ private:
     bool isDirected;  // A boolean to know if the graph is directed (1) or not (0)
     bool isMatrix;  // A boolean to know if the structure of the graph is describe by a list (0) or by a matrix (1)
 
-    vector<Vertex*> listVertex; // The Graph's Vertex list
-    vector<Edge*> listEdge; // The Graph's Edge list
+    vector<Vertex*> vertexList; // The Graph's Vertex list
+    vector<Edge*> edgeList; // The Graph's Edge list
 
     vector<vector<int> > adjencyList;
     vector<vector<int> > adjencyMatrix;
@@ -26,19 +26,19 @@ public:
     void fileToGraph(string myFile);
 
     //Destructor
-
+    ~Graph(){};
 
     // Getters
     int getNbVertex(){return nbVertex;};
     bool getIsDirected(){return isDirected;};
     bool getIsMatrix(){return isMatrix;};
-    vector<Vertex*> getListVertex(){return listVertex;};
+    vector<Vertex*> getListVertex(){return vertexList;};
 
-    // Add a Vertex at the end of the list
-    void addVertex(Vertex* v){listVertex.push_back(v);};
+    // Fill the vertexes list
+    void fillVertexList();
 
-	// Add a Edge at the end of the list
-	void addEdge(Edge* e);
+    // Fill the edges list
+    void fillEdgeList();
 
     // Ostream function
     friend ostream& operator<<(ostream &os, const Graph &g);

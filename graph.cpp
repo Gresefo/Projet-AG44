@@ -16,6 +16,7 @@ void Graph::fileToGraph(string myFile)
             cerr << "Error: the number of vertex in the file is negative !" << endl;
         }
 
+
         //If the graph is directed or not
         getline(fichier,line);
         if (line.compare("o") == 0)		// string.compare() == 0 if it is the same string
@@ -25,6 +26,7 @@ void Graph::fileToGraph(string myFile)
         else
             cerr << "Error: the file does not correctly indicate if the graph is directed or not !" << endl;
 
+
         //If the graph is described by a adjency list or matrix 
         getline(fichier,line);
         if (line.compare("m") == 0)
@@ -33,6 +35,7 @@ void Graph::fileToGraph(string myFile)
             isMatrix = false;
         else
             cerr << "Error: the file does not indicate correctly if it use an adjency list or matrix !" << endl;
+
 
         // Filling the adjency matrix or list datas
         int i = 0;
@@ -70,6 +73,25 @@ void Graph::fileToGraph(string myFile)
             tmp.clear();
         }
 
+
+        // Checking of the size of the adjency list or matrix
+        if (isMatrix)
+        {
+            if ((unsigned int)nbVertex != adjencyMatrix.size())
+                cerr << "Error: the number of vertexes and the size of the adjency matrix don't correspond !" << endl;
+        }
+        else
+        {
+            if ((unsigned int)nbVertex != adjencyList.size())
+                cerr << "Error: the number of vertexes and the size of the adjency list don't correspond !" << endl;
+        }
+
+
+        // Filling the vertexes and edges list
+        this->fillVertexList();
+        this->fillEdgeList();
+
+
         fichier.close();  // closing of the file
     }
 
@@ -94,26 +116,26 @@ ostream& operator<<(ostream& os, const Graph& g)
     else
         os << "defined by an adjency list." << endl;
 
-    if (g.listVertex.empty())
+    if (g.vertexList.empty())
         os << endl << "The list of Vertexes is empty !" << endl;
     else
     {
         os << endl << "Vertex list: ";
-        for (unsigned int i = 0; i < g.listVertex.size(); i++)
+        for (unsigned int i = 0; i < g.vertexList.size(); i++)
         {
-            os << *g.listVertex[i] << ", ";
+            os << *g.vertexList[i] << ", ";
         }
         os << endl;
     }
 
-    if (g.listEdge.empty())
+    if (g.edgeList.empty())
         os << endl << "The list of Edges is empty !" << endl;
     else
     {
 		cout << endl << "Edge list: " << endl;
-        for (unsigned int i = 0; i < g.listEdge.size(); i++)
+        for (unsigned int i = 0; i < g.edgeList.size(); i++)
         {
-            os << *g.listEdge[i] << endl;
+            os << *g.edgeList[i] << endl;
         }
     }
 
@@ -147,18 +169,19 @@ ostream& operator<<(ostream& os, const Graph& g)
     return os;
 }
 
-void Graph::addEdge(Edge* e)
+
+
+void Graph::fillVertexList()
 {
-    listEdge.push_back(e);
-    if (isMatrix)   // Cette fonction est elle necessaire ou est ce qu'on modifiera un graph uniquement à partir du fichier ????
+    for (int i = 1; i <= nbVertex; i++)
     {
-        if (isDirected)
-        {
-
-        }
-        else
-        {
-
-        }
+        Vertex v(i);
+        vertexList.push_back(&v);
     }
+}
+
+
+void Graph::fillEdgeList()
+{
+
 }
