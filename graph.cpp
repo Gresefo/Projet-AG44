@@ -100,6 +100,33 @@ void Graph::fileToGraph(string myFile)
 }
 
 
+void Graph::fillVertexList()
+{
+    for (int i = 1; i <= nbVertex; i++)
+    {
+        Vertex* v = new Vertex(i);
+        vertexList.push_back(v);
+    }
+}
+
+
+void Graph::fillEdgeList()
+{
+    int id = 1;
+    for (int i = 0; i < nbVertex; i++)
+    {
+        for (int j = 0; j < i; j++)
+        {   
+            if (adjencyMatrix[i][j] != 0)
+            {
+                Edge* e = new Edge(id, vertexList[i], vertexList[j]);
+                e->setWeight(adjencyMatrix[i][j]);
+                edgeList.push_back(e);
+                id++;
+            }
+        }
+    }
+}
 
 
 ostream& operator<<(ostream& os, const Graph& g)
@@ -132,7 +159,7 @@ ostream& operator<<(ostream& os, const Graph& g)
         os << endl << "The list of Edges is empty !" << endl;
     else
     {
-		cout << endl << "Edge list: " << endl;
+        cout << endl << "Edge list: " << endl;
         for (unsigned int i = 0; i < g.edgeList.size(); i++)
         {
             os << *g.edgeList[i] << endl;
@@ -170,18 +197,3 @@ ostream& operator<<(ostream& os, const Graph& g)
 }
 
 
-
-void Graph::fillVertexList()
-{
-    for (int i = 1; i <= nbVertex; i++)
-    {
-        Vertex v(i);
-        vertexList.push_back(&v);
-    }
-}
-
-
-void Graph::fillEdgeList()
-{
-
-}

@@ -7,14 +7,7 @@ int main()
 	Graph g;
 	g.fileToGraph("exampleUndirectedMatrix.txt");
 
-	Vertex v1(1), v2(2), v3(3), v4(4);
-
-	Edge e1(1, &v1, &v2), e2(2,&v1,&v3), e3(3,&v2,&v3), e4(4,&v2,&v4);
-
 	cout << g << endl;
 
-
-	
-	cout << "Hello World !" << endl;
 	return 0;
 }

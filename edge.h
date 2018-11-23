@@ -25,6 +25,9 @@ public:
     int getId() const {return id;};
     int getWeight() const {return weight;};
 
+    // Setters
+    void setWeight(int w){weight = w;};
+
 	// Ostream function
 	friend ostream& operator<<(ostream& os, const Edge &e); 
    
