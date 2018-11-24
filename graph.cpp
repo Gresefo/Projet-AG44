@@ -21,20 +21,26 @@ void Graph::fileToGraph(string myFile)
         getline(fichier,line);
         if (line.compare("o") == 0)		// string.compare() == 0 if it is the same string
             isDirected = true;
-        else if (line.compare("n") == 0)
-            isDirected = false;
-        else
-            cerr << "Error: the file does not correctly indicate if the graph is directed or not !" << endl;
+        else 
+        {
+            if (line.compare("n") == 0)
+                isDirected = false;
+            else
+                cerr << "Error: the file does not correctly indicate if the graph is directed or not !" << endl;
+        }
 
 
         //If the graph is described by a adjency list or matrix 
         getline(fichier,line);
         if (line.compare("m") == 0)
             isMatrix = true;
-        else if (line.compare("l") == 0)
-            isMatrix = false;
-        else
-            cerr << "Error: the file does not indicate correctly if it use an adjency list or matrix !" << endl;
+        else   
+        {
+            if (line.compare("l") == 0)
+                isMatrix = false;
+            else
+                cerr << "Error: the file does not indicate correctly if it use an adjency list or matrix !" << endl;
+        }
 
 
         // Filling the adjency matrix or list datas
@@ -113,18 +119,25 @@ void Graph::fillVertexList()
 void Graph::fillEdgeList()
 {
     int id = 1;
-    for (int i = 0; i < nbVertex; i++)
-    {
-        for (int j = 0; j < i; j++)
-        {   
-            if (adjencyMatrix[i][j] != 0)
-            {
-                Edge* e = new Edge(id, vertexList[i], vertexList[j]);
-                e->setWeight(adjencyMatrix[i][j]);
-                edgeList.push_back(e);
-                id++;
+    if (isMatrix)
+    { 
+        for (int i = 0; i < nbVertex; i++)
+        {
+            for (int j = 0; j < i; j++)
+            {   
+                if (adjencyMatrix[i][j] != 0)
+                {
+                    Edge* e = new Edge(id, vertexList[i], vertexList[j]);
+                    e->setWeight(adjencyMatrix[i][j]);
+                    edgeList.push_back(e);
+                    id++;
+                }
             }
         }
+    }
+    else
+    {
+
     }
 }
 
@@ -180,7 +193,7 @@ ostream& operator<<(ostream& os, const Graph& g)
     }
     else
     {
-        cout << "Adjency list :" << endl;
+        cout << endl << "Adjency list :" << endl;
         for (int i = 0; i < g.nbVertex; i++)
         {
             for (unsigned int j = 0; j < g.adjencyList[i].size(); j++)

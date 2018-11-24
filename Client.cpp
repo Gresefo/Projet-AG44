@@ -7,7 +7,13 @@ int main()
 	Graph g;
 	g.fileToGraph("exampleUndirectedMatrix.txt");
 
-	cout << g << endl;
+	cout << g << endl << "-------------------------------------------" << endl << endl;
+
+	Graph g2;
+	g2.fileToGraph("exampleDirectedList.txt");
+
+	cout << g2 << endl;
+
 
 	return 0;
 }
