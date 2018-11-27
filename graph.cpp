@@ -137,7 +137,16 @@ void Graph::fillEdgeList()
     }
     else
     {
-
+        for (int i = 0; i < nbVertex; i++)
+        {
+            for(unsigned int j = 1; j < adjencyList[i].size(); j++)
+            {
+                Edge* e = new Edge(id, vertexList[i], vertexList[adjencyList[i][j] - 1]);
+                e->setWeight(1);//le poids putain
+                edgeList.push_back(e);
+                id++;
+            }
+        }
     }
 }
 
@@ -204,7 +213,6 @@ ostream& operator<<(ostream& os, const Graph& g)
         }
 
     }
-
 
     return os;
 }

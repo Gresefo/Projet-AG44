@@ -2,6 +2,17 @@
 
 ********************************
 
+BE CARFUL:
+The file in ".txt" can only be red if the are save under unix (linux).
+Otherwise the end of the line won't be save the same way than on windows.
+To modifiy the type of a ".txt" file:
+1. edit the file on notepad++
+2. edition -> convertire les sauts de lignes -> unix 
+3. save the file
+You can also write some command lines in the shell, but I don't remember it
+
+********************************
+
 Chemin pour trouver le projet dans l'ordi de Corentin:
 
 Portable:
