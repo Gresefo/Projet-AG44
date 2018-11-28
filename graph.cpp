@@ -47,36 +47,80 @@ void Graph::fileToGraph(string myFile)
         int i = 0;
         char* cstr = NULL;
         char* token = NULL;
-        vector<int> tmp;
 
-        while(getline(fichier,line))
+        if (isMatrix)
         {
-            cstr = new char[line.length()];
-            strcpy(cstr, line.c_str());
-            token = strtok(cstr, ",; ");
-            while(token != NULL)
+            vector<int> tmp;
+            while(getline(fichier,line))
             {
-                i = atoi(token);
-                if(i >= 0)
+                cstr = new char[line.length()];
+                strcpy(cstr, line.c_str());
+                token = strtok(cstr, ",; ");
+                while(token != NULL)
                 {
-                    tmp.push_back(i);
+                    i = atoi(token);
+                    if(i >= 0)
+                    {
+                        tmp.push_back(i);
+                    }
+                    else
+                    {
+                        cerr << "Error, there is a negative number !" << endl;
+                    }
+                    token = strtok(NULL, ",; ");
                 }
-                else
-                {
-                    cerr << "Error, there is a negative number !" << endl;
-                }
-                token = strtok(NULL, ",; ");
+                delete cstr;
+                cstr = NULL;
 
-            }
-            delete cstr;
-            cstr = NULL;
-
-            if (isMatrix)
                 adjencyMatrix.push_back(tmp);
-            else
-                adjencyList.push_back(tmp);
+                tmp.clear();
+            }
+        }
 
-            tmp.clear();
+        else   // If the graph is defined by an adjency list
+
+        {
+                cout << "test";
+            vector<vector<int> > tmp1;
+            vector<int> tmp2;
+            while(getline(fichier,line))
+            {
+                cstr = new char[line.length()];
+                strcpy(cstr, line.c_str());
+                token = strtok(cstr, ";, ");
+                while(cstr != NULL)
+                {
+                    i = atoi(token);
+                    if(i >= 0)
+                    {
+                        tmp2.push_back(i);
+                    }
+                    else
+                    {
+                        cerr << "Error, there is a negative number !" << endl;
+                    }
+                    token = strtok(NULL, ";, ");
+                    i = atoi(token);
+                    if(i >= 0)
+                    {
+                        tmp2.push_back(i);
+                    }
+                    else
+                    {
+                        cerr << "Error, there is a negative weight !" << endl;
+                    }
+                    tmp1.push_back(tmp2);
+                    tmp2.clear();
+                    token = strtok(NULL, ";, ");
+                }
+                delete cstr;
+                cstr = NULL;
+                delete token;
+                token = NULL;
+
+                adjencyList.push_back(tmp1);
+                tmp1.clear();
+            }
         }
 
 
@@ -139,10 +183,10 @@ void Graph::fillEdgeList()
     {
         for (int i = 0; i < nbVertex; i++)
         {
-            for(unsigned int j = 1; j < adjencyList[i].size(); j++)
+            for(unsigned int j = 0; j < adjencyList[i].size(); j++)
             {
-                Edge* e = new Edge(id, vertexList[i], vertexList[adjencyList[i][j] - 1]);
-                e->setWeight(1);//le poids putain
+                Edge* e = new Edge(id, vertexList[i], vertexList[adjencyList[i][j][0] - 1]);
+                e->setWeight(adjencyList[i][j][1]);
                 edgeList.push_back(e);
                 id++;
             }
@@ -205,9 +249,10 @@ ostream& operator<<(ostream& os, const Graph& g)
         cout << endl << "Adjency list :" << endl;
         for (int i = 0; i < g.nbVertex; i++)
         {
+            cout << "V" << i + 1 << "->";
             for (unsigned int j = 0; j < g.adjencyList[i].size(); j++)
             {
-                cout << g.adjencyList[i][j] << "->";
+                cout << "V" << g.adjencyList[i][j][0] << "(" << g.adjencyList[i][j][1] << ")->";
             }
             cout << endl;
         }

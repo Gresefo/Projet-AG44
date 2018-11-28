@@ -15,7 +15,7 @@ private:
     vector<Vertex*> vertexList; // The Graph's Vertex list
     vector<Edge*> edgeList; // The Graph's Edge list
 
-    vector<vector<int> > adjencyList;
+    vector<vector<vector<int> > > adjencyList;
     vector<vector<int> > adjencyMatrix;
 
 public:
@@ -26,7 +26,7 @@ public:
     void fileToGraph(string myFile);
 
     //Destructor
-    ~Graph(){};
+    ~Graph(){}; //Clear tous les vectors
 
     // Getters
     int getNbVertex(){return nbVertex;};
