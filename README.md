@@ -40,11 +40,11 @@ Sans recompiler :
 Pour debugger:
 	gdb Graph -q
 
-Attention le fichier Graph doit exister, donc il faut avoir réussit la compilation
-
 Sortir du mode débugger:
 	q
 
 Pour lancer la lecture:
 	run
 
+Si manque d'explication:
+	bt

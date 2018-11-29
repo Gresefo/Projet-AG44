@@ -80,7 +80,6 @@ void Graph::fileToGraph(string myFile)
         else   // If the graph is defined by an adjency list
 
         {
-                cout << "test";
             vector<vector<int> > tmp1;
             vector<int> tmp2;
             while(getline(fichier,line))
@@ -88,7 +87,7 @@ void Graph::fileToGraph(string myFile)
                 cstr = new char[line.length()];
                 strcpy(cstr, line.c_str());
                 token = strtok(cstr, ";, ");
-                while(cstr != NULL)
+                while(token != NULL)
                 {
                     i = atoi(token);
                     if(i >= 0)
@@ -115,8 +114,6 @@ void Graph::fileToGraph(string myFile)
                 }
                 delete cstr;
                 cstr = NULL;
-                delete token;
-                token = NULL;
 
                 adjencyList.push_back(tmp1);
                 tmp1.clear();
