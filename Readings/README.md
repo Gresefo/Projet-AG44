@@ -46,5 +46,5 @@ Sortir du mode débugger:
 Pour lancer la lecture:
 	run
 
-Si manque d'explication:
+Si manque d'explications:
 	bt

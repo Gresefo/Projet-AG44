@@ -194,23 +194,12 @@ void Graph::fillEdgeList()
 
 ostream& operator<<(ostream& os, const Graph& g)
 {
-    os << "This Graph contains " << g.nbVertex << " vertex(es)." << endl;
-
-    if (g.isDirected)
-        os << "It is a directed graph ";
-    else
-        os << "It is a non directed graph ";
-
-    if (g.isMatrix)
-        os << "defined by an adjency matrix." << endl;
-    else
-        os << "defined by an adjency list." << endl;
-
+    // Vertex list
+    os << endl << "This Graph contains " << g.nbVertex << " vertex(es): ";
     if (g.vertexList.empty())
-        os << endl << "The list of Vertexes is empty !" << endl;
+        os << endl << "the list of Vertexes is empty !" << endl;
     else
     {
-        os << endl << "Vertex list: ";
         for (unsigned int i = 0; i < g.vertexList.size(); i++)
         {
             os << *g.vertexList[i] << ", ";
@@ -218,20 +207,32 @@ ostream& operator<<(ostream& os, const Graph& g)
         os << endl;
     }
 
+    // Edge list
     if (g.edgeList.empty())
-        os << endl << "The list of Edges is empty !" << endl;
+        os << "The list of Edges is empty !" << endl;
     else
     {
-        cout << endl << "Edge list: " << endl;
+        cout << "Edge list: ";
         for (unsigned int i = 0; i < g.edgeList.size(); i++)
         {
-            os << *g.edgeList[i] << endl;
+            os << *g.edgeList[i] << " | ";
         }
+        cout << endl;
     }
 
+    // Directed or not
+    if (g.isDirected)
+        os << "It is a directed graph ";
+    else
+        os << "It is a non directed graph ";
+
+    // Defined by a Matrix or a List
+    if (g.isMatrix)
+        os << "defined by an adjency matrix:" << endl;
+    else
+        os << "defined by an adjency list:" << endl;
     if (g.isMatrix)
     {
-        cout << endl << "Adjency matrix :" << endl;
         for (int i = 0; i < g.nbVertex; i++)
         {
             for (int j = 0; j < g.nbVertex; j++)
@@ -243,7 +244,6 @@ ostream& operator<<(ostream& os, const Graph& g)
     }
     else
     {
-        cout << endl << "Adjency list :" << endl;
         for (int i = 0; i < g.nbVertex; i++)
         {
             cout << "V" << i + 1 << "->";
@@ -253,7 +253,6 @@ ostream& operator<<(ostream& os, const Graph& g)
             }
             cout << endl;
         }
-
     }
 
     return os;
