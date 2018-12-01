@@ -1,6 +1,73 @@
 #include "Graph.h"
 
 
+ostream& operator<<(ostream& os, const Graph& g)
+{
+    // Vertex list
+    os << endl << "This Graph contains " << g.nbVertex << " vertex(es): ";
+    if (g.vertexList.empty())
+        os << endl << "The list of Vertexes is empty !" << endl;
+    else
+    {
+        for (unsigned int i = 0; i < g.vertexList.size(); i++)
+        {
+            os << *g.vertexList[i] << ", ";
+        }
+        os << endl;
+    }
+
+    // Edge list
+    if (g.edgeList.empty())
+        os << "The list of Edges is empty !" << endl;
+    else
+    {
+        cout << "Edge list: ";
+        for (unsigned int i = 0; i < g.edgeList.size(); i++)
+        {
+            os << *g.edgeList[i] << " | ";
+        }
+        cout << endl;
+    }
+
+    // Directed or not
+    if (g.isDirected)
+        os << "It is a directed graph ";
+    else
+        os << "It is a non directed graph ";
+
+    // Defined by a Matrix or a List
+    if (g.isMatrix)
+        os << "defined by an adjency matrix:" << endl;
+    else
+        os << "defined by an adjency list:" << endl;
+    if (g.isMatrix)
+    {
+        for (int i = 0; i < g.nbVertex; i++)
+        {
+            for (int j = 0; j < g.nbVertex; j++)
+            {
+                cout << g.adjencyMatrix[i][j] << " ";
+            }
+            cout << endl;
+        }
+    }
+    else
+    {
+        for (int i = 0; i < g.nbVertex; i++)
+        {
+            cout << "V" << i + 1 << "->";
+            for (unsigned int j = 0; j < g.adjencyList[i].size(); j++)
+            {
+                cout << "V" << g.adjencyList[i][j][0] << "(" << g.adjencyList[i][j][1] << ")->";
+            }
+            cout << endl;
+        }
+    }
+
+    return os;
+}
+
+
 void Graph::fileToGraph(string myFile)
 {
     string line;
@@ -19,7 +86,7 @@ void Graph::fileToGraph(string myFile)
 
         //If the graph is directed or not
         getline(fichier,line);
-        if (line.compare("o") == 0)		// string.compare() == 0 if it is the same string
+        if (line.compare("o") == 0)     // string.compare() == 0 if it is the same string
             isDirected = true;
         else 
         {
@@ -192,70 +259,14 @@ void Graph::fillEdgeList()
 }
 
 
-ostream& operator<<(ostream& os, const Graph& g)
+int matrixToList()
 {
-    // Vertex list
-    os << endl << "This Graph contains " << g.nbVertex << " vertex(es): ";
-    if (g.vertexList.empty())
-        os << endl << "the list of Vertexes is empty !" << endl;
-    else
-    {
-        for (unsigned int i = 0; i < g.vertexList.size(); i++)
-        {
-            os << *g.vertexList[i] << ", ";
-        }
-        os << endl;
-    }
-
-    // Edge list
-    if (g.edgeList.empty())
-        os << "The list of Edges is empty !" << endl;
-    else
-    {
-        cout << "Edge list: ";
-        for (unsigned int i = 0; i < g.edgeList.size(); i++)
-        {
-            os << *g.edgeList[i] << " | ";
-        }
-        cout << endl;
-    }
-
-    // Directed or not
-    if (g.isDirected)
-        os << "It is a directed graph ";
-    else
-        os << "It is a non directed graph ";
-
-    // Defined by a Matrix or a List
-    if (g.isMatrix)
-        os << "defined by an adjency matrix:" << endl;
-    else
-        os << "defined by an adjency list:" << endl;
-    if (g.isMatrix)
-    {
-        for (int i = 0; i < g.nbVertex; i++)
-        {
-            for (int j = 0; j < g.nbVertex; j++)
-            {
-                cout << g.adjencyMatrix[i][j] << " ";
-            }
-            cout << endl;
-        }
-    }
-    else
-    {
-        for (int i = 0; i < g.nbVertex; i++)
-        {
-            cout << "V" << i + 1 << "->";
-            for (unsigned int j = 0; j < g.adjencyList[i].size(); j++)
-            {
-                cout << "V" << g.adjencyList[i][j][0] << "(" << g.adjencyList[i][j][1] << ")->";
-            }
-            cout << endl;
-        }
-    }
-
-    return os;
+    return 1;
 }
 
+
+int listToMatrix()
+{
+    return 1;
+}
 

@@ -8,7 +8,6 @@ class Graph
 private:
 
     int nbVertex;
-    int nbEdge;  // Je pense pas qu'on ait besoin de le connaitre, il en parle pas dans l'enoncé
     bool isDirected;  // A boolean to know if the graph is directed (1) or not (0)
     bool isMatrix;  // A boolean to know if the structure of the graph is describe by a list (0) or by a matrix (1)
 
@@ -20,25 +19,69 @@ private:
 
 public:
     // Constructor with a file
-    Graph(): nbVertex(0), nbEdge(0), isDirected(0), isMatrix(0){};
+    Graph(): nbVertex(0), isDirected(0), isMatrix(0){};
 
     //Function that reads a file in order to create a graph
     void fileToGraph(string myFile);
 
     //Destructor
-    ~Graph(){}; //Clear tous les vectors
+    ~Graph(){};/*
+    {
+        unsigned int i, j;
+        // Clear Vertex List
+        for (i = 0; i < vertexList.size(); i++)
+        {
+            delete vertexList[i];
+        }
+        vertexList.clear();
+        
+        // Clear Edge List
+        for (i = 0; i < edgeList.size(); i++)
+        {
+            delete edgeList[i];
+        }
+        edgeList.clear();
+
+        // Clear adjency Matrix
+        for (i = 0; i < adjencyMatrix.size(); i++)
+        {
+            adjencyMatrix[i].clear();
+        }
+        adjencyMatrix.clear();
+
+        // Clear adjency List
+        for (i = 0; i < adjencyList.size(); i++)
+        {
+            for (j = 0; j < adjencyList[i].size(); j++)
+            {
+                adjencyList[i][j].clear();
+            }
+            adjencyList[i].clear();
+        }
+        adjencyList.clear();
+    };*/
 
     // Getters
     int getNbVertex(){return nbVertex;};
     bool getIsDirected(){return isDirected;};
     bool getIsMatrix(){return isMatrix;};
-    vector<Vertex*> getListVertex(){return vertexList;};
+    vector<Vertex*> getVertexList(){return vertexList;};
 
-    // Fill the vertexes list
+    // Add a vertex
+    void addVertex(Vertex* v)
+    {
+        nbVertex++;
+        vertexList.push_back(v);
+    };
+
+    // Fill the vertex/edge list using the adjency matrix/list. Are needed in fileToGraph()
     void fillVertexList();
-
-    // Fill the edges list
     void fillEdgeList();
+
+    // Switch the description type of a graph from matrix to list or list to matrix
+    // Return 1 if succesful, 0 if not
+    int matrixToList();
+    int listToMatrix();
 
     // Ostream function
     friend ostream& operator<<(ostream &os, const Graph &g);
