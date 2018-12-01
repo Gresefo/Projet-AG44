@@ -259,14 +259,56 @@ void Graph::fillEdgeList()
 }
 
 
-int matrixToList()
+int Graph::matrixToList()
 {
+    if (isMatrix)
+    {
+        
+    }
     return 1;
 }
 
 
-int listToMatrix()
+int Graph::listToMatrix() //FAIRE LE RETURN 0 SI PROBLEME
 {
+    if (isMatrix == 0)
+    {
+        int i;
+        unsigned int j, k;
+
+        // Fill the matrix with 0
+        vector<int> tmp;
+        for (i = 0; i < nbVertex; i++)
+        {
+            tmp.push_back(0);
+        }
+        for (i = 0; i < nbVertex; i++)
+        {
+            adjencyMatrix.push_back(tmp);
+        }
+        tmp.clear();
+
+        // Fill the matrix with corrects vallues
+        for (i = 0; i < nbVertex; i++)
+        {
+            for (j = 0; j < adjencyList[i].size(); j++)
+            {
+                adjencyMatrix[i][adjencyList[i][j][0] - 1] = adjencyList[i][j][1];
+            }
+        }
+
+        // Delete the list and switch the type to matrix
+        for (j = 0; j < adjencyList.size(); j++)
+        {
+            for (k = 0; k < adjencyList[i].size(); k++)
+            {
+                adjencyList[j][k].clear();
+            }
+            adjencyList[j].clear();
+        }
+        adjencyList.clear();
+        isMatrix = 1;
+    }
     return 1;
 }
 

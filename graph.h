@@ -34,7 +34,7 @@ public:
             delete vertexList[i];
         }
         vertexList.clear();
-        
+
         // Clear Edge List
         for (i = 0; i < edgeList.size(); i++)
         {
