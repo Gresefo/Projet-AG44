@@ -90,6 +90,7 @@ public:
     // search algrithms
     void BFS(Vertex &src);
     void DFS(Vertex &src);
+    void DFS_Visit(Vertex&);
 
 };
 
