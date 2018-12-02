@@ -8,7 +8,7 @@ class Graph
 private:
 
     int nbVertex;
-    int time;//used in DFS
+    int time; // Used in DFS
     bool isDirected;  // A boolean to know if the graph is directed (1) or not (0)
     bool isMatrix;  // A boolean to know if the structure of the graph is describe by a list (0) or by a matrix (1)
 
@@ -20,7 +20,7 @@ private:
 
 public:
     // Constructor with a file
-    Graph(): nbVertex(0), isDirected(0), isMatrix(0){};
+    Graph(): nbVertex(0), time(0), isDirected(0), isMatrix(0){};
 
     //Function that reads a file in order to create a graph
     void fileToGraph(string myFile);

@@ -21,7 +21,7 @@ private:
 
 public:
 	// Constructor
-    Vertex(int _id): id(_id){};
+    Vertex(int _id): id(_id), color(0), dist(0), d(0), f(0){};
 
 	// Destructor
 	~Vertex(){};
