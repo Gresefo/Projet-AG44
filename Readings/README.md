@@ -19,7 +19,7 @@ Portable:
 cd /mnt/c/Users/temp/Documents/GitHub/Projet-AG44/
 
 Fixe:
-cd /mnt/d/GitHub/Projet-AG44/
+cd /mnt/d/GitHub/Project-AG44/Projet-AG44
 
 ********************************
 
