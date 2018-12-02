@@ -312,3 +312,87 @@ int Graph::listToMatrix() //FAIRE LE RETURN 0 SI PROBLEME
     return 1;
 }
 
+
+
+void Graph::BFS(Vertex & s)
+{
+    int i(0),nb(0);
+    for(i=0;i<listVertex.size;i++)
+    {
+        listVertex[i].color=0;
+        listVertex[i].dist=1;
+        listVertex[i].pred=NULL;
+    }
+    s.color=1;
+    s.dist=0;
+    vector<Vertex*> Q;
+    Vertex* u(0),v(0);
+    Q.push_back(s);
+    while (Q != NULL)
+    {
+        u=Q.front();
+        //Q.erase(q.front);
+        for(i=0;i<adjencyList[u.id-1][1].size;i++)
+        {
+            v=listVertex[adjencyList[u.id-1][1][i].id-1];
+            if(v.color=0);
+            {
+                v.color=1;
+                v.dist=u.dist+1;
+                v.pred=u;
+                Q.push_back(v);
+                nb+=1//nb est le nombre de vertex que l'on peut attendre en partant de s, à comparer avc nbvertex
+            }
+        }
+        u.color=2;
+        Q.erase(q.front);
+
+    }
+    //sert sans dout a renvoyer un bredth first tree qu'il faudra construire; si on renvoie un vector c'est bon 
+    //si on renvie un graph il faudra mettre filetograph en dehor de la classe ou faire un constructeur qui prend en paramètre un vector ss appeler filetograph
+}
+
+
+
+void Graph::DFS(Vertex & s)
+{
+    int i(0),nb(0),time;
+    for(i=0;i<listVertex.size;i++)
+    {
+        listVertex[i].color=0;
+        listVertex[i].pred=NULL;
+    }
+    time=0;
+    s.d=time;
+    for(i=0;i<adjencyList[s.id-1][1].size;i++)
+    {
+        if(listVertex[adjencyList[s.id-1][1][i]-1].color=0)
+        {
+            DFS-Visit(listVertex[adjencyList[s.id-1][1][i]-1]);
+        }
+        
+    }
+
+}
+
+void Graph::DFS_Visit(Vertex & u)
+{
+    int i;
+    time=time+1;
+    u.d=time;
+    u.color=1;
+    for(i=0;i<adjencyList[u.id-1][1].size,i++)
+    {
+        v=listVertex[adjencyList[u.id-1][1][i]-1];
+        if(v.color=0)
+        {
+
+            v.pred=u;
+            DFS_Visit(v);
+        }
+    }
+    u.color=2;
+    time+=1;
+    u.f=time;
+
+}

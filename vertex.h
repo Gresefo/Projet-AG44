@@ -15,6 +15,9 @@ class Vertex
 {
 private:
     int id;
+    int color,dist;//used in BFS
+    int d,f;//used in DFS
+    Vertex* pred;//used in BFS
 
 public:
 	// Constructor
