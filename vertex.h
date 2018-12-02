@@ -28,6 +28,17 @@ public:
 
     // Getters
     int getId() const {return id;};
+    int getcolor()const{return color;};
+    int getdist()const{return dist;};
+    int getd()const{return d;};
+    int getf()const{return f;};
+
+    //Setters
+    void setcolor(int i){color=i;};
+    void setdist(int i){dist=i;};
+    void setpred(Vertex* u){pred=u;};
+    void setd(int i){d=i;};
+    void setf(int i){f=i;};
 
 
 

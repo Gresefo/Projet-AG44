@@ -1,5 +1,6 @@
 #include "Graph.h"
 
+using namespace std;
 
 ostream& operator<<(ostream& os, const Graph& g)
 {
@@ -316,36 +317,38 @@ int Graph::listToMatrix() //FAIRE LE RETURN 0 SI PROBLEME
 
 void Graph::BFS(Vertex & s)
 {
-    int i(0),nb(0);
-    for(i=0;i<listVertex.size;i++)
+    int nb(0);
+    unsigned int i(0);
+    for(i=0;i<vertexList.size();i++)
     {
-        listVertex[i].color=0;
-        listVertex[i].dist=1;
-        listVertex[i].pred=NULL;
+        vertexList[i]->setcolor(0);
+        vertexList[i]->setdist(1);
+        vertexList[i]->setpred(NULL);
     }
-    s.color=1;
-    s.dist=0;
+    s.setcolor(1);
+    s.setdist(0);
     vector<Vertex*> Q;
+    vector<Vertex*>::iterator ite;
     Vertex* u(0),v(0);
-    Q.push_back(s);
-    while (Q != NULL)
+    Q.push_back(&s);
+    while ( Q.empty()==false)
     {
         u=Q.front();
-        //Q.erase(q.front);
-        for(i=0;i<adjencyList[u.id-1][1].size;i++)
+        for(i=0;i<adjencyList[u->getId()-1][0].size();i++)
         {
-            v=listVertex[adjencyList[u.id-1][1][i].id-1];
-            if(v.color=0);
+            v=*vertexList[adjencyList[u->getId()-1][0][i]-1];
+            if(v.getcolor()==0);
             {
-                v.color=1;
-                v.dist=u.dist+1;
-                v.pred=u;
-                Q.push_back(v);
-                nb+=1//nb est le nombre de vertex que l'on peut attendre en partant de s, à comparer avc nbvertex
+                v.setcolor(1);
+                v.setdist(u->getdist()+1);
+                v.setpred(u);
+                Q.push_back(&v);
+                nb+=1;//nb est le nombre de vertex que l'on peut attendre en partant de s, à comparer avc nbvertex
             }
         }
-        u.color=2;
-        Q.erase(q.front);
+        u->setcolor(2);
+        ite=Q.begin();
+        Q.erase(ite);
 
     }
     //sert sans dout a renvoyer un bredth first tree qu'il faudra construire; si on renvoie un vector c'est bon 
@@ -356,43 +359,46 @@ void Graph::BFS(Vertex & s)
 
 void Graph::DFS(Vertex & s)
 {
-    int i(0),nb(0),time;
-    for(i=0;i<listVertex.size;i++)
+    unsigned int i(0);
+    int nb(0),time;
+    for(i=0;i<vertexList.size();i++)
     {
-        listVertex[i].color=0;
-        listVertex[i].pred=NULL;
+        vertexList[i]->setcolor(0);
+        vertexList[i]->setpred(NULL);
     }
     time=0;
-    s.d=time;
-    for(i=0;i<adjencyList[s.id-1][1].size;i++)
+    s.setd(time);
+    for(i=0;i<adjencyList[s.getId()-1][0].size();i++)
     {
-        if(listVertex[adjencyList[s.id-1][1][i]-1].color=0)
+        if(vertexList[adjencyList[s.getId()-1][0][i]-1]->getcolor()==0)
         {
-            DFS-Visit(listVertex[adjencyList[s.id-1][1][i]-1]);
+            DFS_Visit( *vertexList[adjencyList[s.getId()-1][0][i]-1]);
         }
         
     }
+
 
 }
 
 void Graph::DFS_Visit(Vertex & u)
 {
-    int i;
+    unsigned int i(0);
+    Vertex* v;
     time=time+1;
-    u.d=time;
-    u.color=1;
-    for(i=0;i<adjencyList[u.id-1][1].size,i++)
+    u.setd(time);
+    u.setcolor(1);
+    for(i=0;i<adjencyList[u.getId()-1][1].size();i++)
     {
-        v=listVertex[adjencyList[u.id-1][1][i]-1];
-        if(v.color=0)
+        v=vertexList[adjencyList[u.getId()-1][0][i]-1];
+        if(v->getcolor()==0)
         {
 
-            v.pred=u;
-            DFS_Visit(v);
+            v->setpred(&u);
+            DFS_Visit(*v);
         }
     }
-    u.color=2;
+    u.setcolor(2);
     time+=1;
-    u.f=time;
+    u.setf(time);
 
 }
