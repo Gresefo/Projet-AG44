@@ -289,7 +289,7 @@ int Graph::listToMatrix() //FAIRE LE RETURN 0 SI PROBLEME
         }
         tmp.clear();
 
-        // Fill the matrix with corrects vallues
+        // Fill the matrix with corrects values
         for (i = 0; i < nbVertex; i++)
         {
             for (j = 0; j < adjencyList[i].size(); j++)
@@ -314,7 +314,7 @@ int Graph::listToMatrix() //FAIRE LE RETURN 0 SI PROBLEME
 }
 
 
-
+/*
 void Graph::BFS(Vertex & s)
 {
     int nb(0);
@@ -337,7 +337,7 @@ void Graph::BFS(Vertex & s)
         for(i=0;i<adjencyList[u->getId()-1][0].size();i++)
         {
             v=*vertexList[adjencyList[u->getId()-1][0][i]-1];
-            if(v.getcolor()==0);
+            if(v.getcolor()==0)
             {
                 v.setcolor(1);
                 v.setdist(u->getdist()+1);
@@ -352,7 +352,8 @@ void Graph::BFS(Vertex & s)
 
     }
     //sert sans dout a renvoyer un bredth first tree qu'il faudra construire; si on renvoie un vector c'est bon 
-    //si on renvie un graph il faudra mettre filetograph en dehor de la classe ou faire un constructeur qui prend en paramètre un vector ss appeler filetograph
+    //si on renvie un graph il faudra mettre filetograph en dehor de la classe ou faire un constructeur qui prend 
+    //en paramètre un vector ss appeler filetograph
 }
 
 
@@ -401,4 +402,4 @@ void Graph::DFS_Visit(Vertex & u)
     time+=1;
     u.setf(time);
 
-}
+}*/
