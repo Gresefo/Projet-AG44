@@ -299,16 +299,16 @@ int Graph::listToMatrix() //FAIRE LE RETURN 0 SI PROBLEME
         }
 
         // Delete the list and switch the type to matrix
-        for (j = 0; j < adjencyList.size(); j++)
+        isMatrix = 1;
+/*        for (j = 0; j < adjencyList.size(); j++)
         {
             for (k = 0; k < adjencyList[i].size(); k++)
             {
-                adjencyList[j][k].clear();
+                //adjencyList[j][k].clear();
             }
             adjencyList[j].clear();
         }
-        adjencyList.clear();
-        isMatrix = 1;
+        adjencyList.clear();*/
     }
     return 1;
 }
@@ -317,7 +317,7 @@ int Graph::listToMatrix() //FAIRE LE RETURN 0 SI PROBLEME
 
 
 
-
+/*
 
 void Graph::BFS(Vertex & s)
 {
@@ -470,3 +470,4 @@ void  Graph::SCC(Vertex& s)
  }
 
 
+*/
