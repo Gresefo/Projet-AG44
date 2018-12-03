@@ -314,7 +314,11 @@ int Graph::listToMatrix() //FAIRE LE RETURN 0 SI PROBLEME
 }
 
 
-/*
+
+
+
+
+
 void Graph::BFS(Vertex & s)
 {
     int nb(0);
@@ -402,4 +406,67 @@ void Graph::DFS_Visit(Vertex & u)
     time+=1;
     u.setf(time);
 
-}*/
+}
+
+vector<vertex*> Graph::Topological_Sort(Vertex &s)
+{
+    vector<Vertex*> Q, C(vertexList);
+    Vertex* temp;
+    DFS(s);
+    for(int i=0;i<vertexList.size();i++)
+    {
+        temp=vertexList[i]
+        for(int k=0;k>C.size();k++)
+        {
+            if(temp->getf() <C[k]->getf())
+            {
+                temp=C[k];
+            }
+        }
+        Q.push_back(temp);
+        C.erase(C.begin()+temp->getId()-1);
+    }
+    return Q;
+}
+
+void  Graph::SCC(Vertex& s)
+ {
+    DFS(s);
+    Grapg Gt=computeGT(vertexList);
+    Gt.DFS(*Gt.getvertexList()[1]);
+    Gt.invert();
+    
+
+
+ }
+
+ void Graph::invert()
+ {
+    for(int i=0;i<nbvertex;i++)
+    {
+        vertexList[i]->setf(2*nbvertex-1-vertexList[i]);
+    }
+ }
+
+
+ Graph Graph::computeGT(Graph& g)
+ {
+    vector<vector<vector<int>>>  v=g.getadjencylist(),vt[g.getNbVertex()][2][0];
+    for(int i=0;i<g.getNbVertex();i++)
+    {
+        if(v[i][0].empty==false)
+        {
+            for(int k=0;k<v[i].size();k++)
+            {
+                vt[v[i][0][k]][0].push_back(i+1);
+                vt[v[i][0][k]][1].push_back(v[i][1][k]);
+            }
+
+        }
+
+    }
+    return Graph gf(g,vt);
+
+ }
+
+

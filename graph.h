@@ -21,12 +21,21 @@ private:
 public:
     // Constructor with a file
     Graph(): nbVertex(0), time(0), isDirected(0), isMatrix(0){};
+    Graph(vector<vector<vector<int> > > &v,Graph &g)
+    {
+        Graph();
+        adjencyList=v;
+        adjencyMatrix=listToMatrix(v);
+
+
+    } ;
 
     //Function that reads a file in order to create a graph
     void fileToGraph(string myFile);
 
     //Destructor
     ~Graph(){};/*
+
     {
         unsigned int i, j;
         // Clear Vertex List
@@ -66,6 +75,7 @@ public:
     int getNbVertex(){return nbVertex;};
     bool getIsDirected(){return isDirected;};
     bool getIsMatrix(){return isMatrix;};
+    vector< vector <vector<int>>> getadjencylist(){return adjencyList;};
     vector<Vertex*> getVertexList(){return vertexList;};
 
     // Add a vertex
@@ -91,6 +101,8 @@ public:
     void BFS(Vertex &src);
     void DFS(Vertex &src);
     void DFS_Visit(Vertex&);
+    vector<Vertex*> Topological_Sort(Vertex& s);
+    void invert(void);
 
 };
 

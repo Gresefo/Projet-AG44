@@ -19,9 +19,9 @@ Portable:
 cd /mnt/c/Users/temp/Documents/GitHub/Projet-AG44/
 
 Fixe:
-cd /mnt/d/GitHub/Project-AG44/Projet-AG44
 
-********************************
+
+********************************cd /mnt/d/GitHub/Project-AG44/Projet-AG44
 
 Chemin pour trouver le projet dans l'ordi de Loïc :
 cd /mnt/c/Users/loic-/OneDrive/Documents/GitHub/Projet-AG44/
