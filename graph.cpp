@@ -260,11 +260,37 @@ void Graph::fillEdgeList()
 }
 
 
-int Graph::matrixToList()
+int Graph::matrixToList() //FAIRE LE RETURN 0 SI PROBLEME
 {
     if (isMatrix)
     {
-        
+        // Filling the adjencyList
+        int i, j;
+        vector<vector<int> > tmp1;
+        vector<int> tmp2;
+        for (i = 0; i < nbVertex; i++)
+        {
+            for (j = 0; j < nbVertex; j++)
+            {
+                if (adjencyMatrix[i][j] != 0)
+                {
+                    tmp2.push_back(j + 1);
+                    tmp2.push_back(adjencyMatrix[i][j]);
+                    tmp1.push_back(tmp2);
+                    tmp2.clear();
+                }
+            }
+            adjencyList.push_back(tmp1);
+            tmp1.clear();
+        }
+
+        // Clearing the adjencyMatrix and switching the type of graph
+        for (i = 0; i < nbVertex; i++)
+        {
+            adjencyMatrix[i].clear();
+        }
+        adjencyMatrix.clear();
+        isMatrix = 0;
     }
     return 1;
 }
@@ -299,16 +325,16 @@ int Graph::listToMatrix() //FAIRE LE RETURN 0 SI PROBLEME
         }
 
         // Delete the list and switch the type to matrix
-        isMatrix = 1;
-/*        for (j = 0; j < adjencyList.size(); j++)
+        for (j = 0; j < adjencyList.size(); j++)
         {
-            for (k = 0; k < adjencyList[i].size(); k++)
+            for (k = 0; k < adjencyList[j].size(); k++)
             {
-                //adjencyList[j][k].clear();
+                adjencyList[j][k].clear();
             }
             adjencyList[j].clear();
         }
-        adjencyList.clear();*/
+        adjencyList.clear();
+        isMatrix = 1;
     }
     return 1;
 }

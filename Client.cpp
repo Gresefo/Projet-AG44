@@ -22,9 +22,6 @@ int main()
 		cout << G[i];
 	}
 
-	int test;
-	test = G[2].listToMatrix();
-	cout << G[2];
 
 
 	return 0;
