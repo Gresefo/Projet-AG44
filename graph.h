@@ -36,23 +36,22 @@ public:
     void fileToGraph(string myFile);
 
     //Destructor
-    ~Graph(){};/*
-
+    ~Graph()
     {
         unsigned int i, j;
+        // Clear Edge List
+      /*  for (i = 0; i < edgeList.size(); i++)
+        {
+            delete edgeList[i];
+        }
+        edgeList.clear();
+
         // Clear Vertex List
         for (i = 0; i < vertexList.size(); i++)
         {
             delete vertexList[i];
         }
-        vertexList.clear();
-
-        // Clear Edge List
-        for (i = 0; i < edgeList.size(); i++)
-        {
-            delete edgeList[i];
-        }
-        edgeList.clear();
+        vertexList.clear();*/
 
         // Clear adjency Matrix
         for (i = 0; i < adjencyMatrix.size(); i++)
@@ -71,7 +70,7 @@ public:
             adjencyList[i].clear();
         }
         adjencyList.clear();
-    };*/
+    };
 
     // Getters
     int getNbVertex(){return nbVertex;};
