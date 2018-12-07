@@ -343,7 +343,7 @@ int Graph::listToMatrix() //FAIRE LE RETURN 0 SI PROBLEME
 
 
 
-/*
+
 
 void Graph::BFS(Vertex & s)
 {
@@ -491,7 +491,10 @@ void  Graph::SCC(Vertex& s)
         }
 
     }
-    return Graph gf(g,vt);
+	Graph gf();
+	gf.setadjencyList(vt);
+
+    return gf;
 
  }
 

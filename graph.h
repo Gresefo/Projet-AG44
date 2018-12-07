@@ -21,16 +21,19 @@ private:
 public:
     // Constructor with a file
     Graph(): nbVertex(0), time(0), isDirected(0), isMatrix(0){};
-    /* ca va pas car listToMatrix change juste le type d'un graph, il faut pas lui envoyer de list ou quoi que ce soit
+    // ca va pas car listToMatrix change juste le type d'un graph, il faut pas lui envoyer de list ou quoi que ce soit
     TU l'appliques sur un graph et ça change la type de représentation de adjency list en adjency matrix
-    Graph(vector<vector<vector<int> > > &v,Graph &g)
+	
+
+    /*Graph(vector<vector<vector<int> > > &v,Graph &g)
     {
         Graph();
         adjencyList=v;
-        adjencyMatrix=listToMatrix(v);
+        listToMatrix(v);
+	
 
+    } ; */
 
-    } ;*/
 
     //Function that reads a file in order to create a graph
     void fileToGraph(string myFile);
@@ -79,12 +82,16 @@ public:
     vector<vector<vector<int> > > getadjencylist(){return adjencyList;};
     vector<Vertex*> getVertexList(){return vertexList;};
 
+	//setters
+	
+	void setadjencyList(vector<vector<vector<int> > > &l){adjencyList=l;};
+
     // Add a vertex
-    void addVertex(Vertex* v)
+    /*void addVertex(Vertex* v)
     {
         nbVertex++;
         vertexList.push_back(v);
-    };
+    };*/
 
     // Fill the vertex/edge list using the adjency matrix/list. Are needed in fileToGraph()
     void fillVertexList();
