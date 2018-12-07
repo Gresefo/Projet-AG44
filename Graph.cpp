@@ -10,8 +10,7 @@ ostream& operator<<(ostream& os, const Graph& g)
         os << endl << "The list of Vertexes is empty !" << endl;
     else
     {
-        int size = g.vertexList.size();
-        for (int i = 0; i < size; i++)
+        for (unsigned int i = 0; i < g.vertexList.size(); i++)
         {
             os << *g.vertexList[i] << ", ";
         }
@@ -24,8 +23,7 @@ ostream& operator<<(ostream& os, const Graph& g)
     else
     {
         cout << "Edge list: ";
-        int size = g.edgeList.size();
-        for (int i = 0; i < size; i++)
+        for (unsigned int i = 0; i < g.edgeList.size(); i++)
         {
             os << *g.edgeList[i] << " | ";
         }
@@ -59,8 +57,7 @@ ostream& operator<<(ostream& os, const Graph& g)
         for (int i = 0; i < g.nbVertex; i++)
         {
             cout << "V" << i + 1 << "->";
-            int size = g.adjencyList[i].size();
-            for (int j = 0; j < size; j++)
+            for (unsigned int j = 0; j < g.adjencyList[i].size(); j++)
             {
                 cout << "V" << g.adjencyList[i][j][0] << "(" << g.adjencyList[i][j][1] << ")->";
             }
@@ -85,7 +82,6 @@ void Graph::fileToGraph(string myFile)
         if (nbVertex < 0)
         {
             cerr << "Error: the number of vertex in the file is negative !" << endl;
-            exit (EXIT_FAILURE);
         }
 
 
@@ -98,10 +94,7 @@ void Graph::fileToGraph(string myFile)
             if (line.compare("n") == 0)
                 isDirected = false;
             else
-            {
                 cerr << "Error: the file does not correctly indicate if the graph is directed or not !" << endl;
-                exit (EXIT_FAILURE);
-            }
         }
 
 
@@ -114,10 +107,7 @@ void Graph::fileToGraph(string myFile)
             if (line.compare("l") == 0)
                 isMatrix = false;
             else
-            {
                 cerr << "Error: the file does not indicate correctly if it use an adjency list or matrix !" << endl;
-                exit (EXIT_FAILURE);
-            }
         }
 
 
@@ -144,7 +134,6 @@ void Graph::fileToGraph(string myFile)
                     else
                     {
                         cerr << "Error, there is a negative number !" << endl;
-                        exit (EXIT_FAILURE);
                     }
                     token = strtok(NULL, ",; ");
                 }
@@ -176,7 +165,6 @@ void Graph::fileToGraph(string myFile)
                     else
                     {
                         cerr << "Error, there is a negative number !" << endl;
-                        exit (EXIT_FAILURE);
                     }
                     token = strtok(NULL, ";, ");
                     i = atoi(token);
@@ -187,13 +175,12 @@ void Graph::fileToGraph(string myFile)
                     else
                     {
                         cerr << "Error, there is a negative weight !" << endl;
-                        exit (EXIT_FAILURE);
                     }
                     tmp1.push_back(tmp2);
                     tmp2.clear();
                     token = strtok(NULL, ";, ");
                 }
-                delete[] cstr;
+                delete cstr;
                 cstr = NULL;
 
                 adjencyList.push_back(tmp1);
@@ -206,19 +193,12 @@ void Graph::fileToGraph(string myFile)
         if (isMatrix)
         {
             if ((unsigned int)nbVertex != adjencyMatrix.size())
-            {
                 cerr << "Error: the number of vertexes and the size of the adjency matrix don't correspond !" << endl;
-                exit (EXIT_FAILURE);
-            }
-
         }
         else
         {
             if ((unsigned int)nbVertex != adjencyList.size())
-            {
                 cerr << "Error: the number of vertexes and the size of the adjency list don't correspond !" << endl;
-                exit (EXIT_FAILURE);
-            }
         }
 
 
@@ -231,10 +211,7 @@ void Graph::fileToGraph(string myFile)
     }
 
     else  // if the file did not opened correctly
-    {
         cerr << "Error: while opening the file, the graph is empty !" << endl;
-        exit (EXIT_FAILURE);
-    }
 }
 
 
@@ -269,11 +246,9 @@ void Graph::fillEdgeList()
     }
     else
     {
-        int size = 0;
         for (int i = 0; i < nbVertex; i++)
         {
-            size = adjencyList[i].size();
-            for(int j = 0; j < size; j++)
+            for(unsigned int j = 0; j < adjencyList[i].size(); j++)
             {
                 Edge* e = new Edge(id, vertexList[i], vertexList[adjencyList[i][j][0] - 1]);
                 e->setWeight(adjencyList[i][j][1]);
@@ -282,64 +257,6 @@ void Graph::fillEdgeList()
             }
         }
     }
-}
-
-
-void Graph::graphToFile(string myFile)
-{
-        ofstream fichier(myFile.c_str(), ios::out | ios::trunc);  // Opening in writting mode the file named myFile
- 
-        if(fichier)
-        {
-            fichier << nbVertex << endl;
-            if (isDirected)
-                fichier << "o" << endl;
-            else
-                fichier << "n" << endl;
-            if (isMatrix)
-                fichier << "m" << endl;
-            else
-                fichier << "l" << endl;
-            if (isMatrix)
-            {
-                for (int i = 0; i < nbVertex; i++)
-                {
-                    for (int j = 0; j < nbVertex; j++)
-                    {
-                        fichier << adjencyMatrix[i][j];
-                        if (j == nbVertex - 1)
-                            fichier << ";";
-                        else
-                            fichier << ",";                    
-                    }
-                    if (i != nbVertex - 1)
-                        fichier << endl;
-                }
-            }
-            else
-            {
-                int size = 0;
-                for (int i = 0; i < nbVertex; i++)
-                {
-                    size = adjencyList[i].size();
-                    if (size == 0)
-                        fichier << ";";
-                    for (int j = 0; j < size; j++)
-                    {
-                        fichier << adjencyList[i][j][0] << "," << adjencyList[i][j][1] << ";";
-                    }
-                    if (i != nbVertex - 1)
-                        fichier << endl;
-                }
-            }
- 
-            fichier.close();
-        }
-        else
-        {
-            cerr << "Impossible d'ouvrir le fichier !" << endl;
-            exit (EXIT_FAILURE);
-        }
 }
 
 
@@ -383,7 +300,8 @@ int Graph::listToMatrix() //FAIRE LE RETURN 0 SI PROBLEME
 {
     if (isMatrix == 0)
     {
-        int i, j, k;
+        int i;
+        unsigned int j, k;
 
         // Fill the matrix with 0
         vector<int> tmp;
@@ -400,18 +318,16 @@ int Graph::listToMatrix() //FAIRE LE RETURN 0 SI PROBLEME
         // Fill the matrix with corrects values
         for (i = 0; i < nbVertex; i++)
         {
-            int size = adjencyList[i].size();
-            for (j = 0; j < size; j++)
+            for (j = 0; j < adjencyList[i].size(); j++)
             {
                 adjencyMatrix[i][adjencyList[i][j][0] - 1] = adjencyList[i][j][1];
             }
         }
 
         // Delete the list and switch the type to matrix
-        for (j = 0; j < nbVertex; j++)
+        for (j = 0; j < adjencyList.size(); j++)
         {
-            int size = adjencyList[i].size();
-            for (k = 0; k < size; k++)
+            for (k = 0; k < adjencyList[j].size(); k++)
             {
                 adjencyList[j][k].clear();
             }
@@ -426,8 +342,6 @@ int Graph::listToMatrix() //FAIRE LE RETURN 0 SI PROBLEME
 
 
 
-
-/*
 
 
 
@@ -473,6 +387,7 @@ void Graph::BFS(Vertex & s)
 }
 
 
+
 void Graph::DFS(Vertex & s)
 {
     unsigned int i(0);
@@ -492,6 +407,8 @@ void Graph::DFS(Vertex & s)
         }
         
     }
+
+
 }
 
 void Graph::DFS_Visit(Vertex & u)
@@ -514,16 +431,17 @@ void Graph::DFS_Visit(Vertex & u)
     u.setcolor(2);
     time+=1;
     u.setf(time);
+
 }
 
-vector<vertex*> Graph::Topological_Sort(Vertex &s)
+vector<Vertex*> Graph::Topological_Sort(Vertex &s)
 {
     vector<Vertex*> Q, C(vertexList);
     Vertex* temp;
     DFS(s);
     for(int i=0;i<vertexList.size();i++)
     {
-        temp=vertexList[i]
+        temp=vertexList[i];
         for(int k=0;k>C.size();k++)
         {
             if(temp->getf() <C[k]->getf())
@@ -538,30 +456,35 @@ vector<vertex*> Graph::Topological_Sort(Vertex &s)
 }
 
 void  Graph::SCC(Vertex& s)
-{
+ {
     DFS(s);
-    Grapg Gt=computeGT(vertexList);
-    Gt.DFS(*Gt.getvertexList()[1]);
+    Graph Gt=computeGT(*this);
+    Gt.DFS(*Gt.getVertexList()[1]);
     Gt.invert();
-}
+    
 
-void Graph::invert()
-{
-    for(int i=0;i<nbvertex;i++)
+
+ }
+
+ void Graph::invert()
+ {
+    for(int i=0;i<nbVertex;i++)
     {
-        vertexList[i]->setf(2*nbvertex-1-vertexList[i]);
+        vertexList[i]->setf(2*nbVertex-1-vertexList[i]->getf());
     }
-    }
+ }
 
 
-    Graph Graph::computeGT(Graph& g)
-    {
-    vector<vector<vector<int>>>  v=g.getadjencylist(),vt[g.getNbVertex()][2][0];
+ Graph Graph::computeGT(Graph& g)
+ {
+    vector<vector<vector<int>>>  v=g.getadjencylist(),vt(g.getNbVertex(),vector<vector<int>>(2));
+	
     for(int i=0;i<g.getNbVertex();i++)
     {
-        if(v[i][0].empty==false)
+		int size(v[i].size());
+        if(v[i][0].empty()==false)
         {
-            for(int k=0;k<v[i].size();k++)
+            for(int k=0;k<size;k++)
             {
                 vt[v[i][0][k]][0].push_back(i+1);
                 vt[v[i][0][k]][1].push_back(v[i][1][k]);
@@ -570,11 +493,15 @@ void Graph::invert()
         }
 
     }
-    Graph gf();
-    gf.setadjencyList(vt);
+	Graph gf(g);
+	gf.setadjencyList(vt);
+
 
     return gf;
-}
+
+ }
 
 
-*/
+
+
+

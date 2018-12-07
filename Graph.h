@@ -21,16 +21,40 @@ private:
 public:
     // Constructor with a file
     Graph(): nbVertex(0), time(0), isDirected(0), isMatrix(0){};
+    // ca va pas car listToMatrix change juste le type d'un graph, il faut pas lui envoyer de list ou quoi que ce soit
+    //TU l'appliques sur un graph et ça change la type de représentation de adjency list en adjency matrix
+	
+
+    /*Graph(vector<vector<vector<int> > > &v,Graph &g)
+    {
+        Graph();
+        adjencyList=v;
+        listToMatrix(v);
+	
+
+    } ; */
+
+
+    //Function that reads a file in order to create a graph
+    void fileToGraph(string myFile);
 
     //Destructor
     ~Graph()
     {
         unsigned int i, j;
         // Clear Edge List
+      /*  for (i = 0; i < edgeList.size(); i++)
+        {
+            delete edgeList[i];
+        }
         edgeList.clear();
 
         // Clear Vertex List
-        vertexList.clear();
+        for (i = 0; i < vertexList.size(); i++)
+        {
+            delete vertexList[i];
+        }
+        vertexList.clear();*/
 
         // Clear adjency Matrix
         for (i = 0; i < adjencyMatrix.size(); i++)
@@ -51,21 +75,6 @@ public:
         adjencyList.clear();
     };
 
-    /*Graph(vector<vector<vector<int> > > &v,Graph &g)
-    {
-        Graph();
-        adjencyList=v;
-        listToMatrix(v);
-	
-
-    } ; */
-
-    // Function that reads a file in order to create a graph
-    void fileToGraph(string myFile);
-
-    // Create a file and save the information of a graph
-    void graphToFile(string myFile);
-
     // Getters
     int getNbVertex(){return nbVertex;};
     bool getIsDirected(){return isDirected;};
@@ -73,9 +82,10 @@ public:
     vector<vector<vector<int> > > getadjencylist(){return adjencyList;};
     vector<Vertex*> getVertexList(){return vertexList;};
 
-	// Setters
-	void setAdjencyList(vector<vector<vector<int> > > &l){adjencyList=l;};
-
+	//setters
+	
+	void setadjencyList(vector<vector<vector<int> > > &l){adjencyList=l;};
+	
     // Add a vertex
     /*void addVertex(Vertex* v)
     {
@@ -101,8 +111,12 @@ public:
     void DFS_Visit(Vertex&);
     vector<Vertex*> Topological_Sort(Vertex& s);
     void invert(void);
+	void SCC(Vertex& s);
+	Graph computeGT(Graph& g);
+
 
 };
+
 
 
 #endif // GRAPH_H_INCLUDED
