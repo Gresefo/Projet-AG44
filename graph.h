@@ -36,11 +36,11 @@ public:
     void fileToGraph(string myFile);
 
     //Destructor
-    ~Graph()
+    ~Graph();/*
     {
         unsigned int i, j;
         // Clear Edge List
-      /*  for (i = 0; i < edgeList.size(); i++)
+        for (i = 0; i < edgeList.size(); i++)
         {
             delete edgeList[i];
         }
@@ -51,7 +51,7 @@ public:
         {
             delete vertexList[i];
         }
-        vertexList.clear();*/
+        vertexList.clear();
 
         // Clear adjency Matrix
         for (i = 0; i < adjencyMatrix.size(); i++)
@@ -70,7 +70,7 @@ public:
             adjencyList[i].clear();
         }
         adjencyList.clear();
-    };
+    };*/
 
     // Getters
     int getNbVertex(){return nbVertex;};
@@ -80,11 +80,11 @@ public:
     vector<Vertex*> getVertexList(){return vertexList;};
 
     // Add a vertex
-    void addVertex(Vertex* v)
+ /*   void addVertex(Vertex* v)
     {
         nbVertex++;
         vertexList.push_back(v);
-    };
+    };*/
 
     // Fill the vertex/edge list using the adjency matrix/list. Are needed in fileToGraph()
     void fillVertexList();

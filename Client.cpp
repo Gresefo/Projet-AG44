@@ -21,5 +21,6 @@ int main()
 		cout << G[i];
 	}
 
+
 	return 0;
 }

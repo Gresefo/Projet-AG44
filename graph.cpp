@@ -2,6 +2,43 @@
 
 using namespace std;
 
+Graph::~Graph()
+{
+    unsigned int i, j;
+    // Clear Edge List
+     for (i = 0; i < edgeList.size(); i++)
+    {
+        delete edgeList[i];
+    }
+    edgeList.clear();
+
+    // Clear Vertex List
+    for (i = 0; i < vertexList.size(); i++)
+    {
+        delete vertexList[i];
+    }
+    vertexList.clear();
+
+    // Clear adjency Matrix
+    for (i = 0; i < adjencyMatrix.size(); i++)
+    {
+        adjencyMatrix[i].clear();
+    }
+    adjencyMatrix.clear();
+
+    // Clear adjency List
+    for (i = 0; i < adjencyList.size(); i++)
+    {
+        for (j = 0; j < adjencyList[i].size(); j++)
+        {
+            adjencyList[i][j].clear();
+        }
+        adjencyList[i].clear();
+    }
+    adjencyList.clear();
+}
+
+
 ostream& operator<<(ostream& os, const Graph& g)
 {
     // Vertex list
@@ -342,8 +379,8 @@ int Graph::listToMatrix() //FAIRE LE RETURN 0 SI PROBLEME
 
 
 
-
 /*
+
 
 void Graph::BFS(Vertex & s)
 {
