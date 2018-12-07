@@ -10,7 +10,8 @@ ostream& operator<<(ostream& os, const Graph& g)
         os << endl << "The list of Vertexes is empty !" << endl;
     else
     {
-        for (unsigned int i = 0; i < g.vertexList.size(); i++)
+        int size = g.vertexList.size();
+        for (int i = 0; i < size; i++)
         {
             os << *g.vertexList[i] << ", ";
         }
@@ -23,7 +24,8 @@ ostream& operator<<(ostream& os, const Graph& g)
     else
     {
         cout << "Edge list: ";
-        for (unsigned int i = 0; i < g.edgeList.size(); i++)
+        int size = g.edgeList.size();
+        for (int i = 0; i < size; i++)
         {
             os << *g.edgeList[i] << " | ";
         }
@@ -57,7 +59,8 @@ ostream& operator<<(ostream& os, const Graph& g)
         for (int i = 0; i < g.nbVertex; i++)
         {
             cout << "V" << i + 1 << "->";
-            for (unsigned int j = 0; j < g.adjencyList[i].size(); j++)
+            int size = g.adjencyList[i].size();
+            for (int j = 0; j < size; j++)
             {
                 cout << "V" << g.adjencyList[i][j][0] << "(" << g.adjencyList[i][j][1] << ")->";
             }
@@ -266,9 +269,11 @@ void Graph::fillEdgeList()
     }
     else
     {
+        int size = 0;
         for (int i = 0; i < nbVertex; i++)
         {
-            for(unsigned int j = 0; j < adjencyList[i].size(); j++)
+            size = adjencyList[i].size();
+            for(int j = 0; j < size; j++)
             {
                 Edge* e = new Edge(id, vertexList[i], vertexList[adjencyList[i][j][0] - 1]);
                 e->setWeight(adjencyList[i][j][1]);
@@ -317,6 +322,8 @@ void Graph::graphToFile(string myFile)
                 for (int i = 0; i < nbVertex; i++)
                 {
                     size = adjencyList[i].size();
+                    if (size == 0)
+                        fichier << ";";
                     for (int j = 0; j < size; j++)
                     {
                         fichier << adjencyList[i][j][0] << "," << adjencyList[i][j][1] << ";";
@@ -376,8 +383,7 @@ int Graph::listToMatrix() //FAIRE LE RETURN 0 SI PROBLEME
 {
     if (isMatrix == 0)
     {
-        int i;
-        unsigned int j, k;
+        int i, j, k;
 
         // Fill the matrix with 0
         vector<int> tmp;
@@ -394,16 +400,18 @@ int Graph::listToMatrix() //FAIRE LE RETURN 0 SI PROBLEME
         // Fill the matrix with corrects values
         for (i = 0; i < nbVertex; i++)
         {
-            for (j = 0; j < adjencyList[i].size(); j++)
+            int size = adjencyList[i].size();
+            for (j = 0; j < size; j++)
             {
                 adjencyMatrix[i][adjencyList[i][j][0] - 1] = adjencyList[i][j][1];
             }
         }
 
         // Delete the list and switch the type to matrix
-        for (j = 0; j < adjencyList.size(); j++)
+        for (j = 0; j < nbVertex; j++)
         {
-            for (k = 0; k < adjencyList[j].size(); k++)
+            int size = adjencyList[i].size();
+            for (k = 0; k < size; k++)
             {
                 adjencyList[j][k].clear();
             }
@@ -465,7 +473,6 @@ void Graph::BFS(Vertex & s)
 }
 
 
-
 void Graph::DFS(Vertex & s)
 {
     unsigned int i(0);
@@ -485,8 +492,6 @@ void Graph::DFS(Vertex & s)
         }
         
     }
-
-
 }
 
 void Graph::DFS_Visit(Vertex & u)
@@ -509,7 +514,6 @@ void Graph::DFS_Visit(Vertex & u)
     u.setcolor(2);
     time+=1;
     u.setf(time);
-
 }
 
 vector<vertex*> Graph::Topological_Sort(Vertex &s)
@@ -534,27 +538,24 @@ vector<vertex*> Graph::Topological_Sort(Vertex &s)
 }
 
 void  Graph::SCC(Vertex& s)
- {
+{
     DFS(s);
     Grapg Gt=computeGT(vertexList);
     Gt.DFS(*Gt.getvertexList()[1]);
     Gt.invert();
-    
+}
 
-
- }
-
- void Graph::invert()
- {
+void Graph::invert()
+{
     for(int i=0;i<nbvertex;i++)
     {
         vertexList[i]->setf(2*nbvertex-1-vertexList[i]);
     }
- }
+    }
 
 
- Graph Graph::computeGT(Graph& g)
- {
+    Graph Graph::computeGT(Graph& g)
+    {
     vector<vector<vector<int>>>  v=g.getadjencylist(),vt[g.getNbVertex()][2][0];
     for(int i=0;i<g.getNbVertex();i++)
     {
@@ -569,12 +570,11 @@ void  Graph::SCC(Vertex& s)
         }
 
     }
-	Graph gf();
-	gf.setadjencyList(vt);
+    Graph gf();
+    gf.setadjencyList(vt);
 
     return gf;
-
- }
+}
 
 
 */

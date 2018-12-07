@@ -21,6 +21,8 @@ int main()
 		cout << G[i];
 	}
 
+	G[3].graphToFile("Files/test1.txt");
+
 
 	return 0;
 }
