@@ -82,6 +82,7 @@ void Graph::fileToGraph(string myFile)
         if (nbVertex < 0)
         {
             cerr << "Error: the number of vertex in the file is negative !" << endl;
+            exit (EXIT_FAILURE);
         }
 
 
@@ -94,7 +95,10 @@ void Graph::fileToGraph(string myFile)
             if (line.compare("n") == 0)
                 isDirected = false;
             else
+            {
                 cerr << "Error: the file does not correctly indicate if the graph is directed or not !" << endl;
+                exit (EXIT_FAILURE);
+            }
         }
 
 
@@ -107,7 +111,10 @@ void Graph::fileToGraph(string myFile)
             if (line.compare("l") == 0)
                 isMatrix = false;
             else
+            {
                 cerr << "Error: the file does not indicate correctly if it use an adjency list or matrix !" << endl;
+                exit (EXIT_FAILURE);
+            }
         }
 
 
@@ -134,6 +141,7 @@ void Graph::fileToGraph(string myFile)
                     else
                     {
                         cerr << "Error, there is a negative number !" << endl;
+                        exit (EXIT_FAILURE);
                     }
                     token = strtok(NULL, ",; ");
                 }
@@ -165,6 +173,7 @@ void Graph::fileToGraph(string myFile)
                     else
                     {
                         cerr << "Error, there is a negative number !" << endl;
+                        exit (EXIT_FAILURE);
                     }
                     token = strtok(NULL, ";, ");
                     i = atoi(token);
@@ -175,6 +184,7 @@ void Graph::fileToGraph(string myFile)
                     else
                     {
                         cerr << "Error, there is a negative weight !" << endl;
+                        exit (EXIT_FAILURE);
                     }
                     tmp1.push_back(tmp2);
                     tmp2.clear();
@@ -193,12 +203,19 @@ void Graph::fileToGraph(string myFile)
         if (isMatrix)
         {
             if ((unsigned int)nbVertex != adjencyMatrix.size())
+            {
                 cerr << "Error: the number of vertexes and the size of the adjency matrix don't correspond !" << endl;
+                exit (EXIT_FAILURE);
+            }
+
         }
         else
         {
             if ((unsigned int)nbVertex != adjencyList.size())
+            {
                 cerr << "Error: the number of vertexes and the size of the adjency list don't correspond !" << endl;
+                exit (EXIT_FAILURE);
+            }
         }
 
 
@@ -211,7 +228,10 @@ void Graph::fileToGraph(string myFile)
     }
 
     else  // if the file did not opened correctly
+    {
         cerr << "Error: while opening the file, the graph is empty !" << endl;
+        exit (EXIT_FAILURE);
+    }
 }
 
 
@@ -259,8 +279,8 @@ void Graph::fillEdgeList()
     }
 }
 
-/*
-void graphToFile(string myFile)
+
+void Graph::graphToFile(string myFile)
 {
         ofstream fichier(myFile.c_str(), ios::out | ios::trunc);  // Opening in writting mode the file named myFile
  
@@ -277,9 +297,9 @@ void graphToFile(string myFile)
                 fichier << "l" << endl;
             if (isMatrix)
             {
-                for (unsigned int i = 0; i < nbVertex; i++)
+                for (int i = 0; i < nbVertex; i++)
                 {
-                    for (unsigned int j = 0; j < nbVertex; j++)
+                    for (int j = 0; j < nbVertex; j++)
                     {
                         fichier << adjencyMatrix[i][j];
                         if (j == nbVertex - 1)
@@ -287,24 +307,33 @@ void graphToFile(string myFile)
                         else
                             fichier << ",";                    
                     }
-                    fichier << endl;
+                    if (i != nbVertex - 1)
+                        fichier << endl;
                 }
             }
             else
             {
-                for (unsigned int i = 0; i < nbVertex; i++)
+                int size = 0;
+                for (int i = 0; i < nbVertex; i++)
                 {
-                    int size = adjencyList[i].size();
-                    for 
+                    size = adjencyList[i].size();
+                    for (int j = 0; j < size; j++)
+                    {
+                        fichier << adjencyList[i][j][0] << "," << adjencyList[i][j][1] << ";";
+                    }
+                    if (i != nbVertex - 1)
+                        fichier << endl;
                 }
             }
  
             fichier.close();
         }
         else
-                cerr << "Impossible d'ouvrir le fichier !" << endl;
-
-}*/
+        {
+            cerr << "Impossible d'ouvrir le fichier !" << endl;
+            exit (EXIT_FAILURE);
+        }
+}
 
 
 int Graph::matrixToList() //FAIRE LE RETURN 0 SI PROBLEME
