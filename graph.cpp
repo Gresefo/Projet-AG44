@@ -259,6 +259,53 @@ void Graph::fillEdgeList()
     }
 }
 
+/*
+void graphToFile(string myFile)
+{
+        ofstream fichier(myFile.c_str(), ios::out | ios::trunc);  // Opening in writting mode the file named myFile
+ 
+        if(fichier)
+        {
+            fichier << nbVertex << endl;
+            if (isDirected)
+                fichier << "o" << endl;
+            else
+                fichier << "n" << endl;
+            if (isMatrix)
+                fichier << "m" << endl;
+            else
+                fichier << "l" << endl;
+            if (isMatrix)
+            {
+                for (unsigned int i = 0; i < nbVertex; i++)
+                {
+                    for (unsigned int j = 0; j < nbVertex; j++)
+                    {
+                        fichier << adjencyMatrix[i][j];
+                        if (j == nbVertex - 1)
+                            fichier << ";";
+                        else
+                            fichier << ",";                    
+                    }
+                    fichier << endl;
+                }
+            }
+            else
+            {
+                for (unsigned int i = 0; i < nbVertex; i++)
+                {
+                    int size = adjencyList[i].size();
+                    for 
+                }
+            }
+ 
+            fichier.close();
+        }
+        else
+                cerr << "Impossible d'ouvrir le fichier !" << endl;
+
+}*/
+
 
 int Graph::matrixToList() //FAIRE LE RETURN 0 SI PROBLEME
 {

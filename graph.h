@@ -22,19 +22,6 @@ public:
     // Constructor with a file
     Graph(): nbVertex(0), time(0), isDirected(0), isMatrix(0){};
 
-    /*Graph(vector<vector<vector<int> > > &v,Graph &g)
-    {
-        Graph();
-        adjencyList=v;
-        listToMatrix(v);
-	
-
-    } ; */
-
-
-    //Function that reads a file in order to create a graph
-    void fileToGraph(string myFile);
-
     //Destructor
     ~Graph()
     {
@@ -64,6 +51,21 @@ public:
         adjencyList.clear();
     };
 
+    /*Graph(vector<vector<vector<int> > > &v,Graph &g)
+    {
+        Graph();
+        adjencyList=v;
+        listToMatrix(v);
+	
+
+    } ; */
+
+    // Function that reads a file in order to create a graph
+    void fileToGraph(string myFile);
+
+    // Create a file and save the information of a graph
+    void graphToFile(string myFile);
+
     // Getters
     int getNbVertex(){return nbVertex;};
     bool getIsDirected(){return isDirected;};
@@ -72,7 +74,6 @@ public:
     vector<Vertex*> getVertexList(){return vertexList;};
 
 	// Setters
-	
 	void setAdjencyList(vector<vector<vector<int> > > &l){adjencyList=l;};
 
     // Add a vertex
