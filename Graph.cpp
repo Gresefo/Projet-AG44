@@ -347,7 +347,13 @@ int Graph::listToMatrix() //FAIRE LE RETURN 0 SI PROBLEME
 
 void Graph::BFS(Vertex & s)
 {
-    int nb(0);
+    int nb(0),size(0),swap(0);
+    if(isMatrix==true)
+    {
+        this->matrixToList();
+        swap=1;
+    }
+    cout<< "réussi" << endl;
     unsigned int i(0);
     for(i=0;i<vertexList.size();i++)
     {
@@ -355,6 +361,7 @@ void Graph::BFS(Vertex & s)
         vertexList[i]->setdist(1);
         vertexList[i]->setpred(NULL);
     }
+    cout<< "réussi" << endl;
     s.setcolor(1);
     s.setdist(0);
     vector<Vertex*> Q;
@@ -364,9 +371,15 @@ void Graph::BFS(Vertex & s)
     while ( Q.empty()==false)
     {
         u=Q.front();
-        for(i=0;i<adjencyList[u->getId()-1][0].size();i++)
+            size=adjencyList[u->getId()-1].size();
+            //cout<< "réussi" << endl;
+
+        for(i=0;i<size;i++)
         {
-            v=*vertexList[adjencyList[u->getId()-1][0][i]-1];
+
+                v=*vertexList[adjencyList[u->getId()-1][i][0]-1];
+
+
             if(v.getcolor()==0)
             {
                 v.setcolor(1);
@@ -376,11 +389,21 @@ void Graph::BFS(Vertex & s)
                 nb+=1;//nb est le nombre de vertex que l'on peut attendre en partant de s, à comparer avc nbvertex
             }
         }
+
         u->setcolor(2);
         ite=Q.begin();
         Q.erase(ite);
 
     }
+    if(nb==nbVertex)
+    {
+        cout<<"tout les vertex sont liés"<<endl;
+    }
+    if(swap==1)
+    {
+        this->listToMatrix();
+    }
+    cout<< "réussi" << endl;
     //sert sans dout a renvoyer un bredth first tree qu'il faudra construire; si on renvoie un vector c'est bon 
     //si on renvie un graph il faudra mettre filetograph en dehor de la classe ou faire un constructeur qui prend 
     //en paramètre un vector ss appeler filetograph
@@ -500,6 +523,9 @@ void  Graph::SCC(Vertex& s)
     return gf;
 
  }
+
+
+ 
 
 
 
