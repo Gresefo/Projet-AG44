@@ -2,7 +2,7 @@
 #define VERTEX_H_INCLUDED
 
 #include <vector>
-#include <fstream>
+#include <fstream>  // Used for file managment
 #include <iostream>
 #include <string>
 #include <cstring>  // Used for strtok()

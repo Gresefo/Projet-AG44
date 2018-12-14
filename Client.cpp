@@ -11,13 +11,13 @@ int main()
 	G.push_back(g1);
 
 	//g1.BFS(*g1.getVertexList()[0]);
-	/*
+	
 	g2.fileToGraph("Files/exampleDirectedMatrix.txt");
 	G.push_back(g2);	
 	g3.fileToGraph("Files/exampleUndirectedList.txt");
 	G.push_back(g3);
 	g4.fileToGraph("Files/exampleDirectedList.txt");
-	G.push_back(g4);
+	G.push_back(g4);/*
 	g4.BFS(*g4.getVertexList()[0]);*/
 
 	// Printing out a graph example of each type
