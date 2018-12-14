@@ -217,11 +217,13 @@ void Graph::fileToGraph(string myFile)
 
 void Graph::fillVertexList()
 {
+  
     for (int i = 1; i <= nbVertex; i++)
     {
         Vertex* v = new Vertex(i);
         vertexList.push_back(v);
     }
+    
 }
 
 
@@ -347,63 +349,67 @@ int Graph::listToMatrix() //FAIRE LE RETURN 0 SI PROBLEME
 
 void Graph::BFS(Vertex & s)
 {
-    int nb(0),size(0),swap(0);
+    int nb(0),size(0),swap(0),id;
     if(isMatrix==true)
     {
-        this->matrixToList();
+        this->matrixToList();//change le format pour qu'il soit adapté a la fonction
         swap=1;
     }
-    cout<< "réussi" << endl;
     unsigned int i(0);
-    for(i=0;i<vertexList.size();i++)
+    for(i=0;i<vertexList.size();i++)//initialise tout les vertex
     {
         vertexList[i]->setcolor(0);
         vertexList[i]->setdist(1);
-        vertexList[i]->setpred(NULL);
+        vertexList[i]->setpred(0);
     }
-    cout<< "réussi" << endl;
     s.setcolor(1);
     s.setdist(0);
     vector<Vertex*> Q;
-    vector<Vertex*>::iterator ite;
-    Vertex* u(0),v(0);
+    Vertex* u(0),*v(0);
     Q.push_back(&s);
     while ( Q.empty()==false)
     {
         u=Q.front();
-            size=adjencyList[u->getId()-1].size();
-            //cout<< "réussi" << endl;
-
+        size=adjencyList[u->getId()-1].size();
         for(i=0;i<size;i++)
         {
-
-                v=*vertexList[adjencyList[u->getId()-1][i][0]-1];
-
-
-            if(v.getcolor()==0)
+            //v=*vertexList[adjencyList[u->getId()-1][i][0]-1];
+            id=adjencyList[u->getId()-1][i][0];
+            v=vertexList[id-1];
+            if(v->getcolor()==0)
             {
-                v.setcolor(1);
-                v.setdist(u->getdist()+1);
-                v.setpred(u);
-                Q.push_back(&v);
+                
+                v->setcolor(1);
+                v->setdist(u->getdist()+1);
+                v->setpred(u);
+                Q.push_back(v);
                 nb+=1;//nb est le nombre de vertex que l'on peut attendre en partant de s, à comparer avc nbvertex
             }
         }
-
         u->setcolor(2);
-        ite=Q.begin();
-        Q.erase(ite);
+        //vector<Vertex*>::iterator ite;
+        //ite=Q.begin();
+        Q.erase(Q.begin());
+        /*cout << "la liste est" ;
+        for(int j=0;j<Q.size();j++)
+        {
+            cout << Q[j]->getId() << " " ;
+        }
+        cout << endl;*/
 
     }
     if(nb==nbVertex)
     {
-        cout<<"tout les vertex sont liés"<<endl;
+        cout<<"tout les vertex sont lié"<<endl;
+    }
+    else
+    {
+        cout<<"tout les vertex ne sont pas liés"<<endl;
     }
     if(swap==1)
     {
         this->listToMatrix();
     }
-    cout<< "réussi" << endl;
     //sert sans dout a renvoyer un bredth first tree qu'il faudra construire; si on renvoie un vector c'est bon 
     //si on renvie un graph il faudra mettre filetograph en dehor de la classe ou faire un constructeur qui prend 
     //en paramètre un vector ss appeler filetograph
@@ -413,8 +419,14 @@ void Graph::BFS(Vertex & s)
 
 void Graph::DFS(Vertex & s)
 {
-    unsigned int i(0);
+    unsigned int i(0),size(0);
+    bool swap(0);
     int nb(0),time;
+    if(isMatrix)
+    {
+        this->matrixToList();
+        swap=1;
+    }
     for(i=0;i<vertexList.size();i++)
     {
         vertexList[i]->setcolor(0);
@@ -422,13 +434,17 @@ void Graph::DFS(Vertex & s)
     }
     time=0;
     s.setd(time);
-    for(i=0;i<adjencyList[s.getId()-1][0].size();i++)
+    size=adjencyList[s.getId()-1].size();
+    for(i=0;i<size;i++)
     {
-        if(vertexList[adjencyList[s.getId()-1][0][i]-1]->getcolor()==0)
+        if(vertexList[adjencyList[s.getId()-1][i][0]-1]->getcolor()==0)
         {
-            DFS_Visit( *vertexList[adjencyList[s.getId()-1][0][i]-1]);
+            DFS_Visit( *vertexList[adjencyList[s.getId()-1][i][0]-1]);
         }
-        
+    }
+    if(swap)
+    {
+        this->listToMatrix();
     }
 
 
@@ -436,14 +452,16 @@ void Graph::DFS(Vertex & s)
 
 void Graph::DFS_Visit(Vertex & u)
 {
+
     unsigned int i(0);
     Vertex* v;
     time=time+1;
     u.setd(time);
     u.setcolor(1);
-    for(i=0;i<adjencyList[u.getId()-1][1].size();i++)
+    //for(i=0;i<adjencyList[u.getId()-1][1].size();i++)
+    for(i=0;i<adjencyList[u.getId()-1].size();i++)
     {
-        v=vertexList[adjencyList[u.getId()-1][0][i]-1];
+        v=vertexList[adjencyList[u.getId()-1][i][0]-1];
         if(v->getcolor()==0)
         {
 
@@ -457,60 +475,82 @@ void Graph::DFS_Visit(Vertex & u)
 
 }
 
-vector<Vertex*> Graph::Topological_Sort(Vertex &s)
+vector<Vertex> Graph::Topological_Sort(Vertex &s)
 {
-    vector<Vertex*> Q, C(vertexList);
-    Vertex* temp;
+    vector<Vertex> Q,C;
+    for(int k=0;k<vertexList.size();k++)
+    {
+        C.push_back(*vertexList[k]);
+    }
+    Vertex temp;
     DFS(s);
     for(int i=0;i<vertexList.size();i++)
     {
-        temp=vertexList[i];
-        for(int k=0;k>C.size();k++)
+        
+        temp=*vertexList[i];
+        for(int k=0;k<C.size();k++)
         {
-            if(temp->getf() <C[k]->getf())
+            if(temp.getf() <C[k].getf())
             {
                 temp=C[k];
             }
         }
         Q.push_back(temp);
-        C.erase(C.begin()+temp->getId()-1);
+        C.erase(C.begin()+temp.getId()-1);
     }
     return Q;
 }
 
 void  Graph::SCC(Vertex& s)
  {
+    bool swap(0);
+    if(isMatrix)
+    {
+        this->matrixToList();
+        swap=1;
+    }
     DFS(s);
+    cout << adjencyList.size() << endl;
     Graph Gt=computeGT(*this);
     Gt.DFS(*Gt.getVertexList()[1]);
     Gt.invert();
-    
 
-
+    if(swap)
+    {
+        this->listToMatrix();
+    }
  }
 
  void Graph::invert()
  {
     for(int i=0;i<nbVertex;i++)
     {
-        vertexList[i]->setf(2*nbVertex-1-vertexList[i]->getf());
+        vertexList[i]->setf(2*nbVertex-vertexList[i]->getf()/*-1*/);
     }
  }
 
 
  Graph Graph::computeGT(Graph& g)
  {
-    vector<vector<vector<int>>>  v=g.getadjencylist(),vt(g.getNbVertex(),vector<vector<int>>(2));
-	
+    cout << "réussi" << endl;
+    vector<vector<vector<int>>>  v(g.getadjencylist()),vt(g.getNbVertex(),vector<vector<int>>(0));
+    vector<int> temp;
+
     for(int i=0;i<g.getNbVertex();i++)
     {
+
 		int size(v[i].size());
-        if(v[i][0].empty()==false)
+        if(v[i].empty()==false)
         {
+
             for(int k=0;k<size;k++)
             {
-                vt[v[i][0][k]][0].push_back(i+1);
-                vt[v[i][0][k]][1].push_back(v[i][1][k]);
+                //vt[v[i][k][0]-1][vt[v[i][k][0]-1].size].push_back(i+1);
+                //vt[v[i][k][0]-1][1].push_back(v[i][1][k]);
+                temp.push_back(i+1);
+                temp.push_back(v[i][k][1]);
+                vt[v[i][k][0]-1].push_back(temp);
+
             }
 
         }
@@ -522,7 +562,21 @@ void  Graph::SCC(Vertex& s)
 
     return gf;
 
+ } 
+
+void Graph::init_Single_Src(Vertex &s)
+{
+    for(int i=0;i<vertexList<.size();i++);
+    {
+        
+    }
+}
+
+ BELLMAN-FORD(Vertex &s)
+ {
+
  }
+
 
 
  

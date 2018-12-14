@@ -109,10 +109,11 @@ public:
     void BFS(Vertex &src);
     void DFS(Vertex &src);
     void DFS_Visit(Vertex&);
-    vector<Vertex*> Topological_Sort(Vertex& s);
+    vector<Vertex> Topological_Sort(Vertex& s);
     void invert(void);
 	void SCC(Vertex& s);
 	Graph computeGT(Graph& g);
+    void init_Single_Src(Vertex &s);
 
 
 };

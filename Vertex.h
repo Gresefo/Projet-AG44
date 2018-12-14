@@ -18,11 +18,12 @@ private:
     int color,dist;//used in BFS
     int d,f;//used in DFS
     Vertex* pred;//used in BFS
+    int distance; //used in relax
 
 public:
 	// Constructor
-    Vertex(int _id): id(_id), color(0), dist(0), d(0), f(0), pred(NULL){};
-
+    Vertex(int _id): id(_id), color(0), dist(0), d(0), f(0), pred(0){};
+    Vertex():id(-1), color(0), dist(0), d(0), f(0), pred(0){};
 	// Destructor
 	~Vertex(){};
 
