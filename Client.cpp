@@ -11,10 +11,15 @@ int main()
 	//g1.BFS(*g1.getVertexList()[0]);
 	//g1.DFS(*g1.getVertexList()[0]);
 	//Q=g1.Topological_Sort(*g1.getVertexList()[0]);
-	Graph g5=g1.SCC(*g1.getVertexList()[0]);
+	//Graph g5=g1.SCC(*g1.getVertexList()[0]);
 	G.push_back(g1);
 
+
 	/*
+
+	//g1.BFS(*g1.getVertexList()[0]);
+	
+
 	g2.fileToGraph("Files/exampleDirectedMatrix.txt");
 	g2.BFS(*g2.getVertexList()[0]);
 	G.push_back(g2);
@@ -22,9 +27,11 @@ int main()
 	g3.fileToGraph("Files/exampleUndirectedList.txt");
 	G.push_back(g3);*/
 	g4.fileToGraph("Files/exampleDirectedList.txt");
-	g4.BFS(*g4.getVertexList()[0]);
-	G.push_back(g4);
-	
+
+
+	G.push_back(g4);/*
+	g4.BFS(*g4.getVertexList()[0]);*/
+
 
 	// Printing out a graph example of each type
 	for (unsigned int i = 0; i < G.size(); i++)
