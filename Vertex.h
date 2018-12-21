@@ -19,6 +19,7 @@ private:
     int d,f;//used in DFS
     Vertex* pred;//used in BFS
     int distance; //used in relax
+    Vertex* predecessor;//used in init single source
 
 public:
 	// Constructor

@@ -85,8 +85,12 @@ public:
     void invert(void);
 	void SCC(Vertex& s);
 	Graph computeGT(Graph& g);
+
+    //shortest paths
     void init_Single_Src(Vertex &s);
-    vector<int> BELLMAN_FORD(Vertex &s);
+    void relax(Vertex &u,Vertex &v);
+    bool BELLMAN_FORD(Vertex &s);
+    vector<Vertex *> DIJKSTRA(Vertex &s);
 
 };
 

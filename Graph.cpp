@@ -671,16 +671,102 @@ void Graph::invert()
 
 void Graph::init_Single_Src(Vertex &s)
 {
-    for(int i=0;i<vertexList.size();i++);
+    int upperbound(1),i;
+    for( i=0;i<edgeList.size();i++)
     {
-        
+        upperbound+=edgeList[i]->getWeight();
     }
+    for( i=0;i<vertexList.size();i++);
+    {
+        vertexList[i]->setdist(upperbound);
+        vertexList[i]->setpred(0);
+    }
+    s.setdist(0);
 }
 
- vector<int> Graph::BELLMAN_FORD(Vertex &s)
- {
+void Graph::relax(Vertex &u,Vertex &v)
+{
+    bool found(0);
+    Edge* e(0);
+    for(int i=0;i<edgeList.size();i++)
+    {
+        if(edgeList[i]->getSrc()==&u && edgeList[i]->getDst()==&v)
+            {
+                found=1;
+                e=edgeList[i];
+            }
+    }
+    if(found==1)
+    {
+        if(v.getdist()>u.getdist()+e->getWeight())
+        {
+            v.setdist(u.getdist()+e->getWeight());
+            v.setpred(&u);
+        }
+    }
+    else
+    {
+        cerr<< "error, edge not foun" << endl;
+    }
+    
+}
 
+ bool Graph::BELLMAN_FORD(Vertex &s)
+ {
+    this->init_Single_Src(s);
+    for(int i(1);i<vertexList.size()/*-1*/;i++)
+    {
+        for(int k(0);k<edgeList.size();k++)
+        {
+            relax(*edgeList[k]->getSrc(),*edgeList[k]->getDst());
+
+        }
+    }
+        for(int k(0);k<edgeList.size();k++)
+        {
+            if(edgeList[k]->getDst()->getdist()>edgeList[k]->getSrc()->getdist()+edgeList[k]->getWeight());
+            {
+                return false;
+            }
+        }
+        return true;
  }
+
+
+Vertex  extract_Mini(vector<Vertex *> &Q)
+{
+    Vertex* u(Q[0]);
+    int ite(0);
+    for(int i=1;i<Q.size();i++)
+    {
+        if(Q[i]->getdist()<u->getdist())
+        {
+            u=Q[i];
+            ite=i;
+        }
+    }
+    Q.erase(Q.begin()+ite);
+    return *u;
+}
+
+
+
+vector<Vertex *> Graph::DIJKSTRA(Vertex &s)
+{
+    init_Single_Src(s);
+    Vertex u;
+    std::vector<Vertex *> S,Q(vertexList);
+    while(Q.empty()==false)
+    {
+        u=extract_Mini(Q);
+        S.push_back(&u);
+        for(int i(0);i<adjencyList[u.getId()-1].size();i++)
+        {
+            relax(u,*vertexList[adjencyList[u.getId()-1][i][0]-1]);
+        }
+    }
+    return S;
+}
 
 
 
