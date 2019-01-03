@@ -440,8 +440,7 @@ void Graph::BFS(Vertex & s)
         swap=1;
     }
 
-    unsigned int i(0);
-    for(i=0;i<vertexList.size();i++)//initialise tout les vertex
+    for(unsigned int i=0;i<vertexList.size();i++)//initialise tout les vertex
     {
         vertexList[i]->setcolor(0);
         vertexList[i]->setdist(1);
@@ -458,7 +457,7 @@ void Graph::BFS(Vertex & s)
     {
         u=Q.front();
         size=adjencyList[u->getId()-1].size();
-        for(i=0;i<size;i++)
+        for(int i=0;i<size;i++)
         {
             //v=*vertexList[adjencyList[u->getId()-1][i][0]-1];
             id=adjencyList[u->getId()-1][i][0];
@@ -510,16 +509,16 @@ void Graph::BFS(Vertex & s)
 void Graph::DFS(Vertex & s)
 {
 
-    unsigned int i(0),size(0);
+    int size(0);
     bool swap(0);
-    int nb(0),time;
+    int time;
     if(isMatrix)
     {
         this->matrixToList();
         swap=1;
     }
 
-    for(i=0;i<vertexList.size();i++)
+    for(unsigned int i=0;i<vertexList.size();i++)
     {
         vertexList[i]->setcolor(0);
         vertexList[i]->setpred(NULL);
@@ -527,7 +526,7 @@ void Graph::DFS(Vertex & s)
     time=0;
     s.setd(time);
     size=adjencyList[s.getId()-1].size();
-    for(i=0;i<size;i++)
+    for(int i=0;i<size;i++)
     {
         if(vertexList[adjencyList[s.getId()-1][i][0]-1]->getcolor()==0)
         {
@@ -570,7 +569,7 @@ void Graph::DFS_Visit(Vertex & u)
 vector<Vertex> Graph::Topological_Sort(Vertex &s)
 {
     vector<Vertex> Q,C;
-    for(int k=0;k<vertexList.size();k++)
+    for(unsigned int k=0;k<vertexList.size();k++)
     {
         C.push_back(*vertexList[k]);
     }
@@ -582,7 +581,7 @@ vector<Vertex> Graph::Topological_Sort(Vertex &s)
 
         
         temp=*vertexList[i];
-        for(int k=0;k<C.size();k++)
+        for(unsigned int k=0;k<C.size();k++)
 
         {
             if(temp.getf() <C[k].getf())
@@ -636,7 +635,7 @@ void Graph::invert()
  Graph Graph::computeGT(Graph& g)
  {
     cout << "réussi" << endl;
-    vector<vector<vector<int>>>  v(g.getadjencylist()),vt(g.getNbVertex(),vector<vector<int>>(0));
+    vector<vector<vector<int> > >  v(g.getadjencylist()),vt(g.getNbVertex(),vector<vector<int> >(0));
     vector<int> temp;
 
     for(int i=0;i<g.getNbVertex();i++)
@@ -671,7 +670,8 @@ void Graph::invert()
 
 void Graph::init_Single_Src(Vertex &s)
 {
-    int upperbound(1),i;
+    int upperbound(1);
+    unsigned int i;
     for( i=0;i<edgeList.size();i++)
     {
         upperbound+=edgeList[i]->getWeight();
@@ -688,7 +688,7 @@ void Graph::relax(Vertex &u,Vertex &v)
 {
     bool found(0);
     Edge* e(0);
-    for(int i=0;i<edgeList.size();i++)
+    for(unsigned int i=0;i<edgeList.size();i++)
     {
         if(edgeList[i]->getSrc()==&u && edgeList[i]->getDst()==&v)
             {
@@ -714,17 +714,17 @@ void Graph::relax(Vertex &u,Vertex &v)
  bool Graph::BELLMAN_FORD(Vertex &s)
  {
     this->init_Single_Src(s);
-    for(int i(1);i<vertexList.size()/*-1*/;i++)
+    for(unsigned int i(1);i<vertexList.size()/*-1*/;i++)
     {
-        for(int k(0);k<edgeList.size();k++)
+        for(unsigned int k(0);k<edgeList.size();k++)
         {
             relax(*edgeList[k]->getSrc(),*edgeList[k]->getDst());
 
         }
     }
-        for(int k(0);k<edgeList.size();k++)
+        for(unsigned int k(0);k<edgeList.size();k++)
         {
-            if(edgeList[k]->getDst()->getdist()>edgeList[k]->getSrc()->getdist()+edgeList[k]->getWeight());
+            if(edgeList[k]->getDst()->getdist()>edgeList[k]->getSrc()->getdist()+edgeList[k]->getWeight())
             {
                 return false;
             }
@@ -737,7 +737,7 @@ Vertex  extract_Mini(vector<Vertex *> &Q)
 {
     Vertex* u(Q[0]);
     int ite(0);
-    for(int i=1;i<Q.size();i++)
+    for(unsigned int i=1;i<Q.size();i++)
     {
         if(Q[i]->getdist()<u->getdist())
         {
@@ -760,7 +760,7 @@ vector<Vertex *> Graph::DIJKSTRA(Vertex &s)
     {
         u=extract_Mini(Q);
         S.push_back(&u);
-        for(int i(0);i<adjencyList[u.getId()-1].size();i++)
+        for(unsigned int i(0);i<adjencyList[u.getId()-1].size();i++)
         {
             relax(u,*vertexList[adjencyList[u.getId()-1][i][0]-1]);
         }

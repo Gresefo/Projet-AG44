@@ -15,15 +15,15 @@ int main()
 	G.push_back(g1);
 
 
-	/*
+	
 
 	//g1.BFS(*g1.getVertexList()[0]);
 	
-
+	/*
 	g2.fileToGraph("Files/exampleDirectedMatrix.txt");
 	g2.BFS(*g2.getVertexList()[0]);
 	G.push_back(g2);
-	/*	
+		
 	g3.fileToGraph("Files/exampleUndirectedList.txt");
 	G.push_back(g3);*/
 	g4.fileToGraph("Files/exampleDirectedList.txt");
@@ -38,7 +38,7 @@ int main()
 	{
 		cout << G[i];
 	}
-	for(int k=0;k<Q.size();k++)
+	for(unsigned int k=0;k<Q.size();k++)
 	{
 		cout << Q[k] << " ";
 	}
