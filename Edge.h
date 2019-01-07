@@ -7,7 +7,7 @@ class Edge
 {
 private:
     Vertex* src;
-	Vertex* dst;
+    Vertex* dst;
     int id;
     int weight;
 
@@ -28,14 +28,19 @@ public:
     // Setters
     void setWeight(int w){weight = w;};
 
-	// Ostream function
-	friend ostream& operator<<(ostream& os, const Edge &e); 
-   
+    // Ostream function
+    friend ostream& operator<<(ostream& os, const Edge &e);
+
+    //
+    //bool est_inferieur(Edge &a, Edge &b);
+    bool operator<(Edge &b);
+
+
 
 
 };
 
-#endif // EDGE_H_INCLUDED
 
+#endif // EDGE_H_INCLUDED
 
 

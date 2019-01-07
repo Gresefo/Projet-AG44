@@ -80,20 +80,31 @@ public:
     // search algrithms
     void BFS(Vertex &src);
     void DFS(Vertex &src);
+    void DFS_proc(Vertex &src);//same as DFS but without initialization
     void DFS_Visit(Vertex&);
-    vector<Vertex> Topological_Sort(Vertex& s);
+    void DFSutil();
+    vector<Vertex*> Topological_Sort(Vertex& s);
     void invert(void);
-	void SCC(Vertex& s);
-	Graph computeGT(Graph& g);
+    vector<vector<Vertex*> > SCC(Vertex& s);
+    Graph computeGT(Graph& g);
 
     //shortest paths
     void init_Single_Src(Vertex &s);
-    void relax(Vertex &u,Vertex &v);
+    void relax(Vertex &u,Vertex &v,int w);
     bool BELLMAN_FORD(Vertex &s);
     vector<Vertex *> DIJKSTRA(Vertex &s);
+    vector<Vertex*>::iterator find_it(vector<Vertex*> Q,Vertex& v);
+    void Prim(Vertex& s);
+    vector<Edge*> Kruskal();
+    Vertex* find_set(Vertex& v);
+    void union_set(Vertex& u,Vertex& v);
+
 
 };
+vector<Edge*> sort(vector<Edge*> &G);
 
+Vertex*  extract_Mini(vector<Vertex *> &Q);
 
 
 #endif // GRAPH_H_INCLUDED
+

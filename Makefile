@@ -2,7 +2,7 @@
 CXX=g++
 
 #Error checking
-CFLAGS=-W -Wall -I -ansi 
+CFLAGS=-W -Wall -I --ansi 
 
 
 #Creation of the .exe

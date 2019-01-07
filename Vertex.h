@@ -8,6 +8,7 @@
 #include <cstring>  // Used for strtok()
 #include <stdlib.h>
 #include <stdio.h>
+#include <algorithm>
 
 using namespace std;
 
@@ -20,22 +21,26 @@ private:
     Vertex* pred;//used in BFS
     int distance; //used in relax
     Vertex* predecessor;//used in init single source
+    bool visited;
 
 public:
-	// Constructor
-    Vertex(int _id): id(_id), color(0), dist(0), d(0), f(0), pred(0){};
-    Vertex():id(-1), color(0), dist(0), d(0), f(0), pred(0){};
-	// Destructor
-	~Vertex(){};
+    // Constructor
+    Vertex(int _id): id(_id), color(0), dist(0), d(0), f(0), pred(0),visited(false){};
+    Vertex():id(-1), color(0), dist(0), d(0), f(0), pred(0),visited(false){};
+    // Destructor
+    ~Vertex(){};
 
     // Getters
+    bool getvisited() const{return visited;};
     int getId() const {return id;};
     int getcolor()const{return color;};
     int getdist()const{return dist;};
     int getd()const{return d;};
     int getf()const{return f;};
+    Vertex* getpred()const{return pred;};
 
     //Setters
+    void setvisited(bool b){visited=b;};
     void setcolor(int i){color=i;};
     void setdist(int i){dist=i;};
     void setpred(Vertex* u){pred=u;};

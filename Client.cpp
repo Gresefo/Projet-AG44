@@ -15,20 +15,22 @@ int main()
 	G.push_back(g1);
 
 
-	
+
 
 	//g1.BFS(*g1.getVertexList()[0]);
-	
+
 	/*
 	g2.fileToGraph("Files/exampleDirectedMatrix.txt");
 	g2.BFS(*g2.getVertexList()[0]);
-	G.push_back(g2);
-		
+	G.push_back(g2);*/
+
 	g3.fileToGraph("Files/exampleUndirectedList.txt");
-	G.push_back(g3);*/
-	g4.fileToGraph("Files/exampleDirectedList.txt");
+	G.push_back(g3);
 
+//	g3.DIJKSTRA(Vertex)
+	/*g4.fileToGraph("Files/exampleDirectedList.txt");
 
+    vector<Edge*> T=g4.Kruskal();
 	G.push_back(g4);/*
 	g4.BFS(*g4.getVertexList()[0]);*/
 
@@ -43,5 +45,10 @@ int main()
 		cout << Q[k] << " ";
 	}
 	cout << endl;
+	/*for(int i=0;i<T.size();i++)
+    {
+        cout<< "edge :" << T[i]->getSrc()->getId() << "/" << T[i]->getDst()->getId() << "/" << T[i]->getWeight() << endl;
+    }*/
+
 	return 0;
 }

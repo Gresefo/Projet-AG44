@@ -1,5 +1,6 @@
 #include "Graph.h"
-
+#include <algorithm>
+#include <vector>
 using namespace std;
 
 ostream& operator<<(ostream& os, const Graph& g)
@@ -93,7 +94,7 @@ void Graph::fileToGraph(string myFile)
         getline(fichier,line);
         if (line.compare("o") == 0)     // string.compare() == 0 if it is the same string
             isDirected = true;
-        else 
+        else
         {
             if (line.compare("n") == 0)
                 isDirected = false;
@@ -105,11 +106,11 @@ void Graph::fileToGraph(string myFile)
         }
 
 
-        //If the graph is described by a adjency list or matrix 
+        //If the graph is described by a adjency list or matrix
         getline(fichier,line);
         if (line.compare("m") == 0)
             isMatrix = true;
-        else   
+        else
         {
             if (line.compare("l") == 0)
                 isMatrix = false;
@@ -239,13 +240,13 @@ void Graph::fileToGraph(string myFile)
 
 void Graph::fillVertexList()
 {
-  
+
     for (int i = 1; i <= nbVertex; i++)
     {
         Vertex* v = new Vertex(i);
         vertexList.push_back(v);
     }
-    
+
 }
 
 
@@ -253,11 +254,11 @@ void Graph::fillEdgeList()
 {
     int id = 1;
     if (isMatrix)
-    { 
+    {
         for (int i = 0; i < nbVertex; i++)
         {
             for (int j = 0; j < i; j++)
-            {   
+            {
                 if (adjencyMatrix[i][j] != 0)
                 {
                     Edge* e = new Edge(id, vertexList[i], vertexList[j]);
@@ -289,7 +290,7 @@ void Graph::fillEdgeList()
 void Graph::graphToFile(string myFile)
 {
         ofstream fichier(myFile.c_str(), ios::out | ios::trunc);  // Opening in writting mode the file named myFile
- 
+
         if(fichier)
         {
             fichier << nbVertex << endl;
@@ -311,7 +312,7 @@ void Graph::graphToFile(string myFile)
                         if (j == nbVertex - 1)
                             fichier << ";";
                         else
-                            fichier << ",";                    
+                            fichier << ",";
                     }
                     if (i != nbVertex - 1)
                         fichier << endl;
@@ -333,7 +334,7 @@ void Graph::graphToFile(string myFile)
                         fichier << endl;
                 }
             }
- 
+
             fichier.close();
         }
         else
@@ -465,7 +466,7 @@ void Graph::BFS(Vertex & s)
             if(v->getcolor()==0)
 
             {
-                
+
                 v->setcolor(1);
                 v->setdist(u->getdist()+1);
                 v->setpred(u);
@@ -499,8 +500,8 @@ void Graph::BFS(Vertex & s)
         this->listToMatrix();
     }
 
-    //sert sans dout a renvoyer un bredth first tree qu'il faudra construire; si on renvoie un vector c'est bon 
-    //si on renvie un graph il faudra mettre filetograph en dehor de la classe ou faire un constructeur qui prend 
+    //sert sans dout a renvoyer un bredth first tree qu'il faudra construire; si on renvoie un vector c'est bon
+    //si on renvie un graph il faudra mettre filetograph en dehor de la classe ou faire un constructeur qui prend
     //en paramètre un vector ss appeler filetograph
 }
 
@@ -511,7 +512,7 @@ void Graph::DFS(Vertex & s)
 
     int size(0);
     bool swap(0);
-    int time;
+    //int time;
     if(isMatrix)
     {
         this->matrixToList();
@@ -524,6 +525,41 @@ void Graph::DFS(Vertex & s)
         vertexList[i]->setpred(NULL);
     }
     time=0;
+    s.setd(time);
+    size=adjencyList[s.getId()-1].size();
+    for(int i=0;i<size;i++)
+    {
+        if(vertexList[adjencyList[s.getId()-1][i][0]-1]->getcolor()==0)
+        {
+            DFS_Visit( *vertexList[adjencyList[s.getId()-1][i][0]-1]);
+        }
+    }
+    if(swap)
+    {
+        this->listToMatrix();
+    }
+
+
+}
+
+void Graph::DFS_proc(Vertex & s)
+{
+
+    int size(0);
+    bool swap(0);
+    int time;
+    if(isMatrix)
+    {
+        this->matrixToList();
+        swap=1;
+    }
+
+    /*for(unsigned int i=0;i<vertexList.size();i++)
+    {
+        vertexList[i]->setcolor(0);
+        vertexList[i]->setpred(NULL);
+    }*/
+    //time=0;
     s.setd(time);
     size=adjencyList[s.getId()-1].size();
     for(int i=0;i<size;i++)
@@ -566,39 +602,57 @@ void Graph::DFS_Visit(Vertex & u)
 
 }
 
-vector<Vertex> Graph::Topological_Sort(Vertex &s)
+vector<Vertex*> Graph::Topological_Sort(Vertex &s)
 {
-    vector<Vertex> Q,C;
-    for(unsigned int k=0;k<vertexList.size();k++)
+    vector<Vertex*> Q,C(vertexList);
+    /*for(unsigned int k=0;k<vertexList.size();k++)
     {
         C.push_back(*vertexList[k]);
-    }
-    Vertex temp;
-    DFS(s);
+    }*/
+    Vertex* temp;
+    //DFS(s);
+    DFSutil();
     int size = vertexList.size();
-    for(int i=0;i<size;i++)
+    //for(int i=0;i<size;i++)
+    while(C.empty()==false)
     {
 
-        
-        temp=*vertexList[i];
+
+        //temp=vertexList[i];
+        temp=C[0];
         for(unsigned int k=0;k<C.size();k++)
 
         {
-            if(temp.getf() <C[k].getf())
+            if(temp->getf() <C[k]->getf())
             {
                 temp=C[k];
             }
+            Q.push_back(temp);
+        C.erase(C.begin()+k/*temp->getId()-1*/);
         }
-        Q.push_back(temp);
-        C.erase(C.begin()+temp.getId()-1);
+
 
     }
     return Q;
 }
 
-void  Graph::SCC(Vertex& s)
+void Graph::DFSutil()
+{
+    this->DFS(*vertexList[0]);
+    for(int i=0;i<vertexList.size();i++)
+    {
+        if(vertexList[i]->getcolor()==0)
+        {
+            this->DFS_proc(*vertexList[i]);
+        }
+    }
+
+}
+
+vector<vector<Vertex*> >  Graph::SCC(Vertex& s)
 
  {
+    Vertex* temp;
     bool swap(0);
     if(isMatrix)
     {
@@ -606,21 +660,54 @@ void  Graph::SCC(Vertex& s)
         swap=1;
     }
 
-    DFS(s);
+    vector<Vertex*> Q(this->Topological_Sort(*vertexList[0]));
+    vector<vector<Vertex*> > R;
+    vector<Vertex*> intermediaire;
+
     cout << adjencyList.size() << endl;
-    Graph Gt=computeGT(*this);
-    Gt.DFS(*Gt.getVertexList()[1]);
-    Gt.invert();
-
-
+    Graph gtemp(*this);
+    *this=computeGT(*this);
+    while(Q.empty()==false)
+    {
+        temp=Q[0];
+        DFS(*temp);
+        for(int i=1;i<Q.size();i++)
+        {
+            if(Q[i]->getcolor()==2)
+            {
+                intermediaire.push_back(vertexList[i]);
+                /*vector<Vertex*>::iterator it = find_it(Q, *Q[i]);
+                if (it != Q.end()) { Q.erase(it); }*/
+                Q.erase(Q.begin()+i);
+            }
+        }
+        R.push_back(intermediaire);
+        Q.erase(Q.begin());
+        intermediaire.clear();
+    }
+    //Gt.DFS(*Gt.getVertexList()[1]);
+    //Gt.invert();
     if(swap)
     {
         this->listToMatrix();
     }
+    return R;
  }
 
 
-void Graph::invert()
+vector<Vertex*>::iterator Graph::find_it(vector<Vertex*> Q,Vertex& v)
+    {
+        for(int i=0;i<Q.size();i++)
+        {
+            if(Q[i]==&v)
+            {
+                return Q.begin()+i;
+            }
+        }
+        return Q.end();
+    }
+
+void Graph::invert() //fonction peut-être inutile
 {
     for(int i=0;i<nbVertex;i++)
     {
@@ -634,6 +721,12 @@ void Graph::invert()
 
  Graph Graph::computeGT(Graph& g)
  {
+     bool swap(0);
+     if(isMatrix==true)
+    {
+        this->matrixToList();//change le format pour qu'il soit adapté a la fonction
+        swap=1;
+    }
     cout << "réussi" << endl;
     vector<vector<vector<int> > >  v(g.getadjencylist()),vt(g.getNbVertex(),vector<vector<int> >(0));
     vector<int> temp;
@@ -641,7 +734,7 @@ void Graph::invert()
     for(int i=0;i<g.getNbVertex();i++)
     {
 
-		int size(v[i].size());
+        int size(v[i].size());
         if(v[i].empty()==false)
 
         {
@@ -662,11 +755,13 @@ void Graph::invert()
     Graph gf(g);
     gf.setadjencyList(vt);
 
-
+    if(swap)
+    {
+        this->listToMatrix();
+    }
     return gf;
 
-
- } 
+ }
 
 void Graph::init_Single_Src(Vertex &s)
 {
@@ -706,9 +801,9 @@ void Graph::relax(Vertex &u,Vertex &v)
     }
     else
     {
-        cerr<< "error, edge not foun" << endl;
+        cerr<< "error, edge not found" << endl;
     }
-    
+
 }
 
  bool Graph::BELLMAN_FORD(Vertex &s)
@@ -719,7 +814,6 @@ void Graph::relax(Vertex &u,Vertex &v)
         for(unsigned int k(0);k<edgeList.size();k++)
         {
             relax(*edgeList[k]->getSrc(),*edgeList[k]->getDst());
-
         }
     }
         for(unsigned int k(0);k<edgeList.size();k++)
@@ -733,7 +827,7 @@ void Graph::relax(Vertex &u,Vertex &v)
  }
 
 
-Vertex  extract_Mini(vector<Vertex *> &Q)
+Vertex*  extract_Mini(vector<Vertex *> &Q)
 {
     Vertex* u(Q[0]);
     int ite(0);
@@ -746,31 +840,218 @@ Vertex  extract_Mini(vector<Vertex *> &Q)
         }
     }
     Q.erase(Q.begin()+ite);
-    return *u;
+    return u;
 }
 
 
 
 vector<Vertex *> Graph::DIJKSTRA(Vertex &s)
 {
+    bool swap(0);
+     if(isMatrix==true)
+    {
+        this->matrixToList();//change le format pour qu'il soit adapté a la fonction
+        swap=1;
+    }
     init_Single_Src(s);
-    Vertex u;
+    Vertex *u;
     std::vector<Vertex *> S,Q(vertexList);
     while(Q.empty()==false)
     {
         u=extract_Mini(Q);
-        S.push_back(&u);
-        for(unsigned int i(0);i<adjencyList[u.getId()-1].size();i++)
+        S.push_back(u);
+        for(unsigned int i(0);i<adjencyList[u->getId()-1].size();i++)
         {
-            relax(u,*vertexList[adjencyList[u.getId()-1][i][0]-1]);
+            relax(*u,*vertexList[adjencyList[u->getId()-1][i][0]-1]);
         }
     }
+    if(swap)
+    {
+        this->listToMatrix();
+    }
+
     return S;
 }
 
 
+void Graph::Prim(Vertex &s)
+{
+    bool swap(0);
+     if(isMatrix==true)
+    {
+        this->matrixToList();//change le format pour qu'il soit adapté a la fonction
+        swap=1;
+    }
+        int upperbound;
+    int i;
+    Vertex *u,*v;
+    for( i=0;i<edgeList.size();i++)
+    {
+        upperbound+=edgeList[i]->getWeight();
+    }
+    for(i=0;i<vertexList.size();i++)
+    {
+        vertexList[i]->setpred(0);
+        vertexList[i]->setdist(upperbound+1);
+    }
+    s.setdist(0);
+    vector<Vertex*> Q(vertexList);
+    while(Q.empty()==false)
+    {
+        u=extract_Mini(Q);
+        for(i=0;i<adjencyList[u->getId()-1].size();i++)
+        {
+            v=vertexList[adjencyList[u->getId()-1][i][0]-1];
+            vector<Vertex*>::iterator it = find_it(Q, *Q[i]);
+            //if (it != Q.end() ) { Q.erase(it); } elseif(Q[Q.size()-1]==Q[i]) { Q.erase(Q.end());}
+            if (it != Q.end() || Q[Q.size()-1]==Q[i])
+                {
+                 if(adjencyList[u->getId()-1][i][1]<v->getdist())
+                    {
+                        v->setpred(u);
+                        v->setdist(adjencyList[u->getId()-1][i][1]);
+                    }
+                }
 
- 
+
+        }
+    }
+    if(swap)
+    {
+        this->listToMatrix();
+    }
+
+    /*int i;
+    int upperbound;
+    for( i=0;i<vertexList.size();i++)
+    {
+        vertexList[i]->setpred(0);
+        vertexList[i]->setvisited(0);
+    }
+    for( i=0;i<edgeList.size();i++)
+    {
+        upperbound+=edgeList[i]->getWeight();
+    }
+    Vertex *temp;
+    s.setvisited(true);
+    int nbedge(0);
+    while(nbedge<edgeList.size())
+    {
+        int min=upperbound+1;
+        for(i=0;i<vertexList.size();i++)
+        {
+            if(vertexList[i]->getvisited())
+            {
+                for(int k=0;k<adjencyList[i].size();k++)
+                    if(vertexList[adjencyList[i][0][k]-1]->getvisited()==false)
+                    {
+                        if(min >adjencyList[i][1][k])
+                        {
+                            min=adjencyList[i][1][k];
+                            temp=vertexList[adjencyList[i][0][k]-1];
+                        }
+                    }
+
+            }
+        }
+        temp->setpred(vertexList[i]);
+        temp->setvisited(true);
+        nbedge++;*/
+
+    }
+
+    Vertex* Graph::find_set(Vertex& v)
+{
+    if(&v==v.getpred())
+    {
+        return &v;
+    }
+    else
+    {
+        return find_set(*v.getpred());
+    }
+}
+
+void Graph::union_set(Vertex &u, Vertex &v) {
+    u.setpred(v.getpred());
+}
+
+
+vector<Edge*> Graph::Kruskal()
+{
+    Vertex *u,*v;
+    vector<Edge*> T;
+    for(int i=0;i<vertexList.size();i++)
+    {
+        vertexList[i]->setpred(vertexList[i]);
+    }
+    vector<Edge *> G(edgeList);
+
+    //std::sort(G.begin(),G.end());
+    sort(G);
+        for(int i=0;i<G.size();i++)
+    {
+        cout <<"Kruskal edge :" << G[i]->getSrc()->getId() << "/" << G[i]->getDst()->getId() << "/" << G[i]->getWeight() << endl;
+    }
+    for(int i=0;i<G.size();i++)
+    {
+        u=find_set(*G[i]->getSrc());
+        v=find_set(*G[i]->getDst());
+        if(u!=v)
+        {
+            T.push_back(G[i]);
+            union_set(*u,*v);
+        }
+    }
+
+    return G;
+}
+
+vector<Edge*> sort(vector<Edge*> &G)
+{
+    bool inorder(false);
+    int taille=G.size();
+    Edge *temp ;
+    while(!inorder)
+    {
+        inorder=true;
+        for(int i=0;i<taille-1;i++)
+        {
+            if(G[i]->getWeight()>G[i+1]->getWeight())
+            {
+                temp=G[i+1];
+                G[i+1]=G[i];
+                G[i]=temp;
+                inorder =false;
+            }
+        }
+        taille--;
+    }
+}
+
+
+/*void tri_bulles(vector<int>& tab)
+{
+    bool tab_en_ordre = false;
+    int taille = tab.size();
+    while(!tab_en_ordre)
+    {
+        tab_en_ordre = true;
+        for(int i=0 ; i < taille-1 ; i++)
+        {
+            if(tab[i] > tab[i+1])
+            {
+                swap(tab[i],tab[i+1]);
+                tab_en_ordre = false;
+            }
+        }
+        taille--;
+    }
+}*/
+
+
+
+
 
 
 
