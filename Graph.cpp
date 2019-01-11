@@ -345,7 +345,7 @@ void Graph::graphToFile(string myFile)
 }
 
 
-int Graph::matrixToList() //FAIRE LE RETURN 0 SI PROBLEME
+int Graph::matrixToList() 
 {
     if (isMatrix)
     {
@@ -381,7 +381,7 @@ int Graph::matrixToList() //FAIRE LE RETURN 0 SI PROBLEME
 }
 
 
-int Graph::listToMatrix() //FAIRE LE RETURN 0 SI PROBLEME
+int Graph::listToMatrix() 
 {
     if (isMatrix == 0)
     {
@@ -426,11 +426,6 @@ int Graph::listToMatrix() //FAIRE LE RETURN 0 SI PROBLEME
 }
 
 
-
-
-
-
-
 void Graph::BFS(Vertex & s)
 {
 
@@ -460,7 +455,6 @@ void Graph::BFS(Vertex & s)
         size=adjencyList[u->getId()-1].size();
         for(int i=0;i<size;i++)
         {
-            //v=*vertexList[adjencyList[u->getId()-1][i][0]-1];
             id=adjencyList[u->getId()-1][i][0];
             v=vertexList[id-1];
             if(v->getcolor()==0)
@@ -475,16 +469,7 @@ void Graph::BFS(Vertex & s)
             }
         }
         u->setcolor(2);
-        //vector<Vertex*>::iterator ite;
-        //ite=Q.begin();
         Q.erase(Q.begin());
-        /*cout << "la liste est" ;
-        for(int j=0;j<Q.size();j++)
-        {
-            cout << Q[j]->getId() << " " ;
-        }
-        cout << endl;*/
-
     }
 
     if(nb==nbVertex)
@@ -512,7 +497,6 @@ void Graph::DFS(Vertex & s)
 
     int size(0);
     bool swap(0);
-    //int time;
     if(isMatrix)
     {
         this->matrixToList();
@@ -562,12 +546,6 @@ void Graph::DFS_proc(Vertex & s)// same as dfs but without initialisation
         swap=1;
     }
 
-    /*for(unsigned int i=0;i<vertexList.size();i++)
-    {
-        vertexList[i]->setcolor(0);
-        vertexList[i]->setpred(NULL);
-    }*/
-    //time=0;
     time+=1;
     s.setd(time);
 
@@ -588,8 +566,6 @@ void Graph::DFS_proc(Vertex & s)// same as dfs but without initialisation
     {
         this->listToMatrix();
     }
-
-
 }
 
 void Graph::DFS_Visit(Vertex & u)
@@ -600,7 +576,6 @@ void Graph::DFS_Visit(Vertex & u)
     time=time+1;
     u.setd(time);
     u.setcolor(1);
-    //for(i=0;i<adjencyList[u.getId()-1][1].size();i++)
     for(i=0;i<adjencyList[u.getId()-1].size();i++)
     {
         v=vertexList[adjencyList[u.getId()-1][i][0]-1];
@@ -613,57 +588,39 @@ void Graph::DFS_Visit(Vertex & u)
     }
     u.setcolor(2);
     time+=1;
-
     u.setf(time);
-
 }
 
 vector<Vertex*> Graph::Topological_Sort(Vertex &s)
 {
     vector<Vertex*> Q,C(vertexList);
-    /*for(unsigned int k=0;k<vertexList.size();k++)
-    {
-        C.push_back(*vertexList[k]);
-    }*/
     Vertex* temp;
     DFS(s);
     DFSutil(s);
 
     int ite;
-    //for(int i=0;i<size;i++)
     while(C.empty()==false)
     {
-
-
-        //temp=vertexList[i];
         ite=0;
         temp=C[0];
         int size = C.size();
         for(int k=0;k<size;k++)
-
         {
             if(temp->getf() <C[k]->getf())
             {
 
                 temp=C[k];
                 ite=k;
-
             }
-
         }
-
         Q.push_back(temp);
-        C.erase(C.begin()+ite/*temp->getId()-1*/);
-
-
-
+        C.erase(C.begin()+ite);
     }
     return Q;
 }
 
 void Graph::DFSutil(Vertex &s)//run dfs for every vertex to make sure there isnt any vertex left without being computed
 {
-
     this->DFS(s);
     for(unsigned int i=0;i<vertexList.size();i++)
     {
@@ -672,11 +629,9 @@ void Graph::DFSutil(Vertex &s)//run dfs for every vertex to make sure there isnt
             this->DFS_proc(*vertexList[i]);
         }
     }
-
 }
 
-vector<vector<Vertex*> >  Graph::SCC(Vertex& s)
-
+vector<vector<Vertex*> > Graph::SCC(Vertex& s)
  {
     Vertex* temp;
     bool swap(0);
@@ -690,10 +645,6 @@ vector<vector<Vertex*> >  Graph::SCC(Vertex& s)
     vector<vector<Vertex*> > R;
     vector<Vertex*> intermediaire;
 
-
-
-
-    //Graph gtemp(*this);
     this->computeGT();
 
     while(Q.empty()==false)
@@ -705,26 +656,18 @@ vector<vector<Vertex*> >  Graph::SCC(Vertex& s)
 
         for(unsigned int i=1;i<Q.size();i++)
         {
-
             if(Q[i]->getcolor()==2)
             {
-
                 intermediaire.push_back(vertexList[Q[i]->getId()-1]);
-                /*vector<Vertex*>::iterator it = find_it(Q, *Q[i]);
-                if (it != Q.end()) { Q.erase(it); }*/
                 supp.push_back(i);
             }
-
         }
 
         int taille(supp.size());
-
         for(int z=taille;z>0;z--)
         {
             Q.erase(Q.begin()+supp[z-1]);
         }
-
-
 
         R.push_back(intermediaire);
         Q.erase(Q.begin());
@@ -732,8 +675,6 @@ vector<vector<Vertex*> >  Graph::SCC(Vertex& s)
         intermediaire.clear();
         supp.clear();
     }
-    //Gt.DFS(*Gt.getVertexList()[1]);
-    //Gt.invert();
     for (unsigned int e=0;e<R.size();e++)
     {
         cout<< "component nuber :" << e+1 ;
@@ -750,25 +691,23 @@ vector<vector<Vertex*> >  Graph::SCC(Vertex& s)
         this->listToMatrix();
     }
     return R;
-
-
- }
+}
 
 
 vector<Vertex*>::iterator Graph::find_it(vector<Vertex*> Q,Vertex& v)
+{
+    int size = Q.size();
+    for(int i=0;i<size;i++)
     {
-        int size = Q.size();
-        for(int i=0;i<size;i++)
+        if(Q[i]==&v)
         {
-            if(Q[i]==&v)
-            {
-                return Q.begin()+i;
-            }
+            return Q.begin()+i;
         }
-        return Q.end();
     }
+    return Q.end();
+}
 
-void Graph::invert() //fonction peut-être inutile
+void Graph::invert()
 {
     for(int i=0;i<nbVertex;i++)
     {
@@ -777,10 +716,7 @@ void Graph::invert() //fonction peut-être inutile
 }
 
 
-
-
-
- /*Graph*/void Graph::computeGT(/*Graph& g*/)
+ void Graph::computeGT()
  {
     bool swap(0);
     if(isMatrix==false)
@@ -788,60 +724,36 @@ void Graph::invert() //fonction peut-être inutile
         this->listToMatrix();//change le format pour qu'il soit adapté a la fonction
         swap=1;
     }
-
-    //vector<Vertex*> vlist(g.getVertexList());
     vector<Vertex*> vlist(getVertexList());
-    //vector<vector<vector<int> > >  v(g.getadjencylist()),vt(g.getNbVertex(),vector<vector<int> >(0));
     vector<vector< int > >  v(adjencyMatrix),vt;//
 
     vector<vector<int> > temp2,init2;
     vector<int> temp1,init1;
     for(int s=0;s<nbVertex;s++)
-        {
-            init1.push_back(0);
+    {
+        init1.push_back(0);
 
-        }
+    }
     for(int j=0;j<nbVertex;j++)
     {
         vt.push_back(init1);
 
     }
-
-
     for(int i=0;i<nbVertex;i++)
     {
-
-
-
             for(int k=0;k<nbVertex;k++)
             {
-                //vt[v[i][k][0]-1][vt[v[i][k][0]-1].size].push_back(i+1);
-                //vt[v[i][k][0]-1][1].push_back(v[i][1][k]);
-                /*temp1.push_back(i+1);
-                temp1.push_back(v[i][k][1]);
-
-                temp2.push_back(temp1);
-                temp1.clear();
-                vt[v[i][k][0]-1].push_back(temp2);
-                temp2.clear();*/
                 vt[k][i]=v[i][k];
-
             }
-
-
     }
     cout<<endl;
 
-    //Graph gf(g);
-    //this->setadjencyList(vt);
     this->setadjencyMatrix(vt);
 
     if(swap)
     {
         this->matrixToList();
     }
-    //return gf;
-
  }
 
 void Graph::init_Single_Src(Vertex &s)
@@ -890,7 +802,7 @@ void Graph::relax(Vertex &u,Vertex &v)
  bool Graph::BELLMAN_FORD(Vertex &s)
  {
     this->init_Single_Src(s);
-    for(unsigned int i(1);i<vertexList.size()/*-1*/;i++)
+    for(unsigned int i(1);i<vertexList.size();i++)
     {
         for(unsigned int k(0);k<edgeList.size();k++)
         {
@@ -908,7 +820,7 @@ void Graph::relax(Vertex &u,Vertex &v)
  }
 
 
-Vertex*  extract_Mini(vector<Vertex *> &Q)
+Vertex* extract_Mini(vector<Vertex *> &Q)
 {
     Vertex* u(Q[0]);
     int ite(0);
@@ -985,61 +897,20 @@ void Graph::Prim(Vertex &s)
         {
             v=vertexList[adjencyList[u->getId()-1][i][0]-1];
             vector<Vertex*>::iterator it = find_it(Q, *Q[i]);
-            //if (it != Q.end() ) { Q.erase(it); } elseif(Q[Q.size()-1]==Q[i]) { Q.erase(Q.end());}
             if (it != Q.end() || Q[Q.size()-1]==Q[i])
+            {
+             if(adjencyList[u->getId()-1][i][1]<v->getdist())
                 {
-                 if(adjencyList[u->getId()-1][i][1]<v->getdist())
-                    {
-                        v->setpred(u);
-                        v->setdist(adjencyList[u->getId()-1][i][1]);
-                    }
+                    v->setpred(u);
+                    v->setdist(adjencyList[u->getId()-1][i][1]);
                 }
-
-
+            }
         }
     }
     if(swap)
     {
         this->listToMatrix();
     }
-
-    /*int i;
-    int upperbound;
-    for( i=0;i<vertexList.size();i++)
-    {
-        vertexList[i]->setpred(0);
-        vertexList[i]->setvisited(0);
-    }
-    for( i=0;i<edgeList.size();i++)
-    {
-        upperbound+=edgeList[i]->getWeight();
-    }
-    Vertex *temp;
-    s.setvisited(true);
-    int nbedge(0);
-    while(nbedge<edgeList.size())
-    {
-        int min=upperbound+1;
-        for(i=0;i<vertexList.size();i++)
-        {
-            if(vertexList[i]->getvisited())
-            {
-                for(int k=0;k<adjencyList[i].size();k++)
-                    if(vertexList[adjencyList[i][0][k]-1]->getvisited()==false)
-                    {
-                        if(min >adjencyList[i][1][k])
-                        {
-                            min=adjencyList[i][1][k];
-                            temp=vertexList[adjencyList[i][0][k]-1];
-                        }
-                    }
-
-            }
-        }
-        temp->setpred(vertexList[i]);
-        temp->setvisited(true);
-        nbedge++;*/
-
 }
 
 Vertex* Graph::find_set(Vertex& v)
@@ -1056,7 +927,6 @@ Vertex* Graph::find_set(Vertex& v)
 
 void Graph::union_set(Vertex &u, Vertex &v) {
     v.setpred(u.getpred());
-    //u.setpred(v.getpred());
 }
 
 
@@ -1071,31 +941,22 @@ vector<Edge*> Graph::Kruskal()
     }
     vector<Edge *> G(edgeList);
 
-    //std::sort(G.begin(),G.end());
     sort(G);
-     /*  for(int i=0;i<G.size();i++)
-    {
-        cout <<"Kruskal edge :" << G[i]->getSrc()->getId() << "/" << G[i]->getDst()->getId() << "/" << G[i]->getWeight() << endl;
-    }*/
     size = G.size();
     for(int i=0;i<size;i++)
     {
-        //cout << "avant " << "u : " << *G[i]->getSrc()  << " " << "v : " << *G[i]->getDst() << endl;
         u=find_set(*G[i]->getSrc());
         v=find_set(*G[i]->getDst());
-        //cout << "aprés " <<"u : " << *u  << " " << "v : " << *v << endl;
-        if(u->getId() != v->getId())/*if(u!=v)*/
+        if(u->getId() != v->getId())
         {
-            //cout<<"rajouté"<<endl;
             T.push_back(G[i]);
             union_set(*u,*v);
         }
     }
-
     return T;
 }
 
-vector<Edge*> sort(vector<Edge*> &G)
+void sort(vector<Edge*> &G)
 {
     bool inorder(false);
     int taille=G.size();
@@ -1116,32 +977,3 @@ vector<Edge*> sort(vector<Edge*> &G)
         taille--;
     }
 }
-
-
-/*void tri_bulles(vector<int>& tab)
-{
-    bool tab_en_ordre = false;
-    int taille = tab.size();
-    while(!tab_en_ordre)
-    {
-        tab_en_ordre = true;
-        for(int i=0 ; i < taille-1 ; i++)
-        {
-            if(tab[i] > tab[i+1])
-            {
-                swap(tab[i],tab[i+1]);
-                tab_en_ordre = false;
-            }
-        }
-        taille--;
-    }
-}*/
-
-
-
-
-
-
-
-
-

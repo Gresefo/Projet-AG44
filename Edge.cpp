@@ -13,14 +13,7 @@ ostream& operator<<(ostream& os, const Edge &e)
 	return os;
 }
 
-
-/*bool Edge::est_inferieur(Edge &a, Edge &b)
-{
-	return (a.weight<b.weight);
-}*/
-
 bool Edge::operator<(Edge &b)
 {
 	return (weight<b.weight);
-	//return est_inferieur(a,b);
 }
