@@ -629,7 +629,6 @@ vector<Vertex*> Graph::Topological_Sort(Vertex &s)
     DFS(s);
     DFSutil(s);
 
-    int size = vertexList.size();
     int ite;
     //for(int i=0;i<size;i++)
     while(C.empty()==false)
@@ -639,8 +638,8 @@ vector<Vertex*> Graph::Topological_Sort(Vertex &s)
         //temp=vertexList[i];
         ite=0;
         temp=C[0];
-
-        for(unsigned int k=0;k<C.size();k++)
+        int size = C.size();
+        for(int k=0;k<size;k++)
 
         {
             if(temp->getf() <C[k]->getf())
@@ -666,7 +665,7 @@ void Graph::DFSutil(Vertex &s)//run dfs for every vertex to make sure there isnt
 {
 
     this->DFS(s);
-    for(int i=0;i<vertexList.size();i++)
+    for(unsigned int i=0;i<vertexList.size();i++)
     {
         if(vertexList[i]->getcolor()==0)
         {
@@ -704,7 +703,7 @@ vector<vector<Vertex*> >  Graph::SCC(Vertex& s)
 
         DFS(*temp);
 
-        for(int i=1;i<Q.size();i++)
+        for(unsigned int i=1;i<Q.size();i++)
         {
 
             if(Q[i]->getcolor()==2)
@@ -735,10 +734,10 @@ vector<vector<Vertex*> >  Graph::SCC(Vertex& s)
     }
     //Gt.DFS(*Gt.getVertexList()[1]);
     //Gt.invert();
-    for (int e=0;e<R.size();e++)
+    for (unsigned int e=0;e<R.size();e++)
     {
         cout<< "component nuber :" << e+1 ;
-        for(int t=0;t<R[e].size();t++)
+        for(unsigned int t=0;t<R[e].size();t++)
         {
             cout << "  " << *R[e][t];
         }
@@ -758,7 +757,8 @@ vector<vector<Vertex*> >  Graph::SCC(Vertex& s)
 
 vector<Vertex*>::iterator Graph::find_it(vector<Vertex*> Q,Vertex& v)
     {
-        for(int i=0;i<Q.size();i++)
+        int size = Q.size();
+        for(int i=0;i<size;i++)
         {
             if(Q[i]==&v)
             {
@@ -782,9 +782,8 @@ void Graph::invert() //fonction peut-être inutile
 
  /*Graph*/void Graph::computeGT(/*Graph& g*/)
  {
-     bool swap(0);
-     int size;
-     if(isMatrix==false)
+    bool swap(0);
+    if(isMatrix==false)
     {
         this->listToMatrix();//change le format pour qu'il soit adapté a la fonction
         swap=1;
@@ -964,14 +963,15 @@ void Graph::Prim(Vertex &s)
         this->matrixToList();//change le format pour qu'il soit adapté a la fonction
         swap=1;
     }
-        int upperbound;
-    int i;
+    int upperbound;
     Vertex *u,*v;
-    for( i=0;i<edgeList.size();i++)
+    int size = edgeList.size();
+    for(int i=0;i<size;i++)
     {
         upperbound+=edgeList[i]->getWeight();
     }
-    for(i=0;i<vertexList.size();i++)
+    size = vertexList.size();
+    for(int i=0;i<size;i++)
     {
         vertexList[i]->setpred(0);
         vertexList[i]->setdist(upperbound+1);
@@ -981,7 +981,7 @@ void Graph::Prim(Vertex &s)
     while(Q.empty()==false)
     {
         u=extract_Mini(Q);
-        for(i=0;i<adjencyList[u->getId()-1].size();i++)
+        for(unsigned int i=0;i<adjencyList[u->getId()-1].size();i++)
         {
             v=vertexList[adjencyList[u->getId()-1][i][0]-1];
             vector<Vertex*>::iterator it = find_it(Q, *Q[i]);
@@ -1040,9 +1040,9 @@ void Graph::Prim(Vertex &s)
         temp->setvisited(true);
         nbedge++;*/
 
-    }
+}
 
-    Vertex* Graph::find_set(Vertex& v)
+Vertex* Graph::find_set(Vertex& v)
 {
     if(&v==v.getpred())
     {
@@ -1064,7 +1064,8 @@ vector<Edge*> Graph::Kruskal()
 {
     Vertex *u,*v;
     vector<Edge*> T;
-    for(int i=0;i<vertexList.size();i++)
+    int size = vertexList.size();
+    for(int i=0;i<size;i++)
     {
         vertexList[i]->setpred(vertexList[i]);
     }
@@ -1076,7 +1077,8 @@ vector<Edge*> Graph::Kruskal()
     {
         cout <<"Kruskal edge :" << G[i]->getSrc()->getId() << "/" << G[i]->getDst()->getId() << "/" << G[i]->getWeight() << endl;
     }*/
-    for(int i=0;i<G.size();i++)
+    size = G.size();
+    for(int i=0;i<size;i++)
     {
         //cout << "avant " << "u : " << *G[i]->getSrc()  << " " << "v : " << *G[i]->getDst() << endl;
         u=find_set(*G[i]->getSrc());
