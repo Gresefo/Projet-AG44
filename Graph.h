@@ -68,6 +68,7 @@ public:
 
     // Setters
     void setadjencyList(vector<vector<vector<int> > > &l){adjencyList=l;};
+    void setadjencyMatrix(vector<vector<int> > &m){adjencyMatrix=m;};
 
     // Switch the description type of a graph from matrix to list or list to matrix
     // Return 1 if succesful, 0 if not
@@ -82,15 +83,16 @@ public:
     void DFS(Vertex &src);
     void DFS_proc(Vertex &src);//same as DFS but without initialization
     void DFS_Visit(Vertex&);
-    void DFSutil();
+    void DFSutil(Vertex&);
     vector<Vertex*> Topological_Sort(Vertex& s);
     void invert(void);
     vector<vector<Vertex*> > SCC(Vertex& s);
-    Graph computeGT(Graph& g);
+    //Graph computeGT(Graph& g);
+    void computeGT(void);
 
     //shortest paths
     void init_Single_Src(Vertex &s);
-    void relax(Vertex &u,Vertex &v,int w);
+    void relax(Vertex &u,Vertex &v);
     bool BELLMAN_FORD(Vertex &s);
     vector<Vertex *> DIJKSTRA(Vertex &s);
     vector<Vertex*>::iterator find_it(vector<Vertex*> Q,Vertex& v);

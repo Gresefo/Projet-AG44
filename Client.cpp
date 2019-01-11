@@ -21,15 +21,18 @@ int main()
 
 
 	g2.fileToGraph("Files/exampleDirectedMatrix.txt");
-	g2.BFS(*g2.getVertexList()[0]);
-	g2.computeGT();
+	//g2.BFS(*g2.getVertexList()[0]);
+	//g2.computeGT();
 
-	//g2.DFS(*g2.getVertexList()[4]);
-	g2.DFSutil();
+	/*g2.DFS(*g2.getVertexList()[2]);
 	for(int s=0;s<g2.getVertexList().size();s++)
     {
         cout << "Vertex g2 tmp num :" << s+1 << " d " << g2.getVertexList()[s]->getd() << " f " << g2.getVertexList()[s]->getf() << endl;
-    }
+    }*/
+
+
+    //vector<vector<Vertex*> > R=g2.SCC(*g2.getVertexList()[0]);
+
 
     G.push_back(g2);
 
@@ -57,12 +60,22 @@ int main()
 	//g3.Prim(*g3.getVertexList()[0]);
 
 //	g3.DIJKSTRA(Vertex)
-	//g4.fileToGraph("Files/exampleDirectedList.txt");
-
+	g4.fileToGraph("Files/exampleDirectedList.txt");
+    vector<vector<Vertex*> > R2=g4.SCC((*g4.getVertexList()[0]));
+    for (int e=0;e<R2.size();e++)
+    {
+        cout<< "component nuber :" << e+1 ;
+        for(int t=0;t<R2[e].size();t++)
+        {
+            cout << "  " << *R2[e][t];
+        }
+        cout << endl;
+    }
     //vector<Edge*> T=g4.Kruskal();
-	/*G.push_back(g4);
+	G.push_back(g4);
 	//g4.BFS(*g4.getVertexList()[0]);
-	vector<Edge*> R=g4.Kruskal();
+
+	/*vector<Edge*> R=g4.Kruskal();
     for(int z=0;z<R.size();z++)
     {
             cout << *R[z]->getSrc() << " / " << *R[z]->getDst() << endl;

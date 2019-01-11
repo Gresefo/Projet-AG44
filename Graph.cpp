@@ -521,13 +521,15 @@ void Graph::DFS(Vertex & s)
 
     for(unsigned int i=0;i<vertexList.size();i++)
     {
+        vertexList[i]->setd(-1);
+        vertexList[i]->setf(-1);
         vertexList[i]->setcolor(0);
         vertexList[i]->setpred(NULL);
     }
     time=0;
     s.setd(time);
     s.setcolor(1);
-    cout << s << " :time d du début"<< s.getd() <<  endl;
+
     size=adjencyList[s.getId()-1].size();
     for(int i=0;i<size;i++)
     {
@@ -539,7 +541,7 @@ void Graph::DFS(Vertex & s)
     s.setcolor(2);
     time+=1;
     s.setf(time);
-    cout << s << " :time d de fin"<< s.getf() <<  endl;
+
     if(swap)
     {
         this->listToMatrix();
@@ -568,7 +570,7 @@ void Graph::DFS_proc(Vertex & s)// same as dfs but without initialisation
     //time=0;
     time+=1;
     s.setd(time);
-    cout << s << " :time d du début ds DFS proc"<< s.getd() <<  endl;
+
     s.setcolor(1);
     size=adjencyList[s.getId()-1].size();
     for(int i=0;i<size;i++)
@@ -581,7 +583,7 @@ void Graph::DFS_proc(Vertex & s)// same as dfs but without initialisation
     s.setcolor(2);
     time+=1;
     s.setf(time);
-    cout << s << " :time d de fin ds DFS proc"<< s.getf() <<  endl;
+
     if(swap)
     {
         this->listToMatrix();
@@ -611,7 +613,7 @@ void Graph::DFS_Visit(Vertex & u)
     }
     u.setcolor(2);
     time+=1;
-    cout << "valeur time " << time << endl;
+
     u.setf(time);
 
 }
@@ -625,7 +627,7 @@ vector<Vertex*> Graph::Topological_Sort(Vertex &s)
     }*/
     Vertex* temp;
     DFS(s);
-    DFSutil();
+    DFSutil(s);
 
     int size = vertexList.size();
     int ite;
@@ -660,10 +662,10 @@ vector<Vertex*> Graph::Topological_Sort(Vertex &s)
     return Q;
 }
 
-void Graph::DFSutil()//run dfs for every vertex to make sure there isnt any vertex left without being computed
+void Graph::DFSutil(Vertex &s)//run dfs for every vertex to make sure there isnt any vertex left without being computed
 {
 
-    this->DFS(*vertexList[0]);
+    this->DFS(s);
     for(int i=0;i<vertexList.size();i++)
     {
         if(vertexList[i]->getcolor()==0)
@@ -683,51 +685,74 @@ vector<vector<Vertex*> >  Graph::SCC(Vertex& s)
     {
         this->matrixToList();
         swap=1;
+    }
     vector<int> supp;
-    vector<Vertex*> Q(this->Topological_Sort(*vertexList[0]));
+    vector<Vertex*> Q(this->Topological_Sort(s));
     vector<vector<Vertex*> > R;
     vector<Vertex*> intermediaire;
 
-    cout << adjencyList.size() << endl;
-    for(int k=0;k<Q.size();k++)
-    {
-        cout << "dans la liste Q du scc vertex num " << 1 << " vertex:" << *Q[k] << " avc le finish time "<< Q[k]->getf() << endl;
-    }
+
+
+
     //Graph gtemp(*this);
     this->computeGT();
+
     while(Q.empty()==false)
     {
         temp=Q[0];
+        intermediaire.push_back(vertexList[Q[0]->getId()-1]);
+
         DFS(*temp);
+
         for(int i=1;i<Q.size();i++)
         {
+
             if(Q[i]->getcolor()==2)
             {
-                intermediaire.push_back(vertexList[i]);
+
+                intermediaire.push_back(vertexList[Q[i]->getId()-1]);
                 /*vector<Vertex*>::iterator it = find_it(Q, *Q[i]);
                 if (it != Q.end()) { Q.erase(it); }*/
                 supp.push_back(i);
             }
 
         }
+
         int taille(supp.size());
+
         for(int z=taille;z>0;z--)
         {
-            Q.erase(Q.begin()+supp[taille-z-1]);
+            Q.erase(Q.begin()+supp[z-1]);
         }
+
+
 
         R.push_back(intermediaire);
         Q.erase(Q.begin());
+
         intermediaire.clear();
+        supp.clear();
     }
     //Gt.DFS(*Gt.getVertexList()[1]);
     //Gt.invert();
+    for (int e=0;e<R.size();e++)
+    {
+        cout<< "component nuber :" << e+1 ;
+        for(int t=0;t<R[e].size();t++)
+        {
+            cout << "  " << *R[e][t];
+        }
+        cout << endl;
+    }
     this->computeGT();
+
     if(swap)
     {
         this->listToMatrix();
     }
     return R;
+
+
  }
 
 
@@ -764,7 +789,7 @@ void Graph::invert() //fonction peut-être inutile
         this->listToMatrix();//change le format pour qu'il soit adapté a la fonction
         swap=1;
     }
-    cout << "réussi" << endl;
+
     //vector<Vertex*> vlist(g.getVertexList());
     vector<Vertex*> vlist(getVertexList());
     //vector<vector<vector<int> > >  v(g.getadjencylist()),vt(g.getNbVertex(),vector<vector<int> >(0));
@@ -782,14 +807,7 @@ void Graph::invert() //fonction peut-être inutile
         vt.push_back(init1);
 
     }
-    for(int s=0;s<nbVertex;s++)
-    {
-        for(int j=0;j<nbVertex;j++)
-        {
-            cout << vt[s][j];
-        }
-        cout<<endl;
-    }
+
 
     for(int i=0;i<nbVertex;i++)
     {
@@ -814,14 +832,7 @@ void Graph::invert() //fonction peut-être inutile
 
     }
     cout<<endl;
-    for(int s=0;s<nbVertex;s++)
-    {
-        for(int j=0;j<nbVertex;j++)
-        {
-            cout << vt[s][j];
-        }
-        cout<<endl;
-    }
+
     //Graph gf(g);
     //this->setadjencyList(vt);
     this->setadjencyMatrix(vt);
