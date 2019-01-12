@@ -34,13 +34,6 @@ public:
     //
     //bool est_inferieur(Edge &a, Edge &b);
     bool operator<(Edge &b);
-
-
-
-
 };
 
-
 #endif // EDGE_H_INCLUDED
-
-

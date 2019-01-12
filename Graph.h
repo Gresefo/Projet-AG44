@@ -87,7 +87,6 @@ public:
     vector<Vertex*> Topological_Sort(Vertex& s);
     void invert(void);
     vector<vector<Vertex*> > SCC(Vertex& s);
-    //Graph computeGT(Graph& g);
     void computeGT(void);
 
     //shortest paths
@@ -215,7 +214,8 @@ public:
 
 
 };
-vector<Edge*> sort(vector<Edge*> &G);
+
+void sort(vector<Edge*> &G);
 
 Vertex*  extract_Mini(vector<Vertex *> &Q);
 

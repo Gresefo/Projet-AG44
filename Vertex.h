@@ -31,7 +31,6 @@ public:
     ~Vertex(){};
 
     // Getters
-//    bool getvisited() const{return visited;};
     int getId() const {return id;};
     int getcolor()const{return color;};
     int getdist()const{return dist;};
@@ -40,7 +39,6 @@ public:
     Vertex* getpred()const{return pred;};
 
     //Setters
-  //  void setvisited(bool b){visited=b;};
     void setcolor(int i){color=i;};
     void setdist(int i){dist=i;};
     void setpred(Vertex* u){pred=u;};
@@ -53,4 +51,6 @@ public:
     friend ostream& operator<<(ostream &os, const Vertex &v);
 };
 
+
 #endif // VERTEX_H_INCLUDED
+
