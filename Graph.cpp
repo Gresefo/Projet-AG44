@@ -445,7 +445,7 @@ void Graph::BFS(Vertex & s)
     {
         vertexList[i]->setcolor(0);
         vertexList[i]->setdist(1);
-        vertexList[i]->setpred(0);
+        vertexList[i]->setpred(NULL);
     }
     s.setcolor(1);
     s.setdist(0);
@@ -489,11 +489,11 @@ void Graph::BFS(Vertex & s)
 
     if(nb==nbVertex)
     {
-        cout<<"tout les vertex sont lié"<<endl;
+        cout<<"All verticle are linked from the choosen one"<<endl;
     }
     else
     {
-        cout<<"tout les vertex ne sont pas liés depuis :" << s <<endl;
+        cout<<"All verticles are not linked from the verticle :" << s <<endl;
     }
     if(swap==1)
     {
@@ -620,6 +620,12 @@ void Graph::DFS_Visit(Vertex & u)
 
 vector<Vertex*> Graph::Topological_Sort(Vertex &s)
 {
+    bool swap(0);
+    if(isMatrix)
+    {
+        this->matrixToList();
+        swap=1;
+    }
     vector<Vertex*> Q,C(vertexList);
     /*for(unsigned int k=0;k<vertexList.size();k++)
     {
@@ -628,6 +634,7 @@ vector<Vertex*> Graph::Topological_Sort(Vertex &s)
     Vertex* temp;
     DFS(s);
     DFSutil(s);
+
 
     int size = vertexList.size();
     int ite;
@@ -658,6 +665,10 @@ vector<Vertex*> Graph::Topological_Sort(Vertex &s)
 
 
 
+    }
+    if(swap)
+    {
+        this->listToMatrix();
     }
     return Q;
 }
@@ -853,58 +864,75 @@ void Graph::init_Single_Src(Vertex &s)
     {
         upperbound+=edgeList[i]->getWeight();
     }
-    for( i=0;i<vertexList.size();i++);
+    for( int t=0;t<vertexList.size();t++)
     {
-        vertexList[i]->setdist(upperbound);
-        vertexList[i]->setpred(0);
+        vertexList[t]->setdist(upperbound);
+        vertexList[t]->setpred(vertexList[t]);
     }
     s.setdist(0);
 }
 
-void Graph::relax(Vertex &u,Vertex &v)
+void Graph::relax(Vertex &u,Vertex &v,int w)
 {
     bool found(0);
     Edge* e(0);
-    for(unsigned int i=0;i<edgeList.size();i++)
+    /*for(unsigned int i=0;i<edgeList.size();i++)
     {
         if(edgeList[i]->getSrc()==&u && edgeList[i]->getDst()==&v)
             {
                 found=1;
                 e=edgeList[i];
             }
-    }
-    if(found==1)
-    {
-        if(v.getdist()>u.getdist()+e->getWeight())
+    }*/
+    //if(found==1)
+    //{
+      //  cout << "u.getdist =" << u.getdist() << "/ v.dist" << v.getdist() << "/ poid" << w << endl;
+        if(v.getdist()>u.getdist()+w)
         {
-            v.setdist(u.getdist()+e->getWeight());
+            v.setdist(u.getdist()+w);
             v.setpred(&u);
         }
-    }
-    else
+    //}
+    /*else
     {
         cerr<< "error, edge not found" << endl;
-    }
+    }*/
 
 }
 
  bool Graph::BELLMAN_FORD(Vertex &s)
  {
+     bool swap(0);
+     if(isMatrix)
+     {
+         this->matrixToList();
+         swap=1;
+     }
     this->init_Single_Src(s);
-    for(unsigned int i(1);i<vertexList.size()/*-1*/;i++)
+
+    for(unsigned int i=1;i<vertexList.size()/*-1*/;i++)
     {
         for(unsigned int k(0);k<edgeList.size();k++)
         {
-            relax(*edgeList[k]->getSrc(),*edgeList[k]->getDst());
+            relax(*edgeList[k]->getSrc(),*edgeList[k]->getDst(),edgeList[k]->getWeight());
         }
     }
-        for(unsigned int k(0);k<edgeList.size();k++)
+        for(unsigned int k=1;k<edgeList.size();k++)
         {
             if(edgeList[k]->getDst()->getdist()>edgeList[k]->getSrc()->getdist()+edgeList[k]->getWeight())
             {
+                if(swap)
+                {
+                    this->listToMatrix();
+                }
                 return false;
             }
         }
+        if(swap)
+        {
+            this->listToMatrix();
+        }
+
         return true;
  }
 
@@ -944,7 +972,7 @@ vector<Vertex *> Graph::DIJKSTRA(Vertex &s)
         S.push_back(u);
         for(unsigned int i(0);i<adjencyList[u->getId()-1].size();i++)
         {
-            relax(*u,*vertexList[adjencyList[u->getId()-1][i][0]-1]);
+            relax(*u,*vertexList[adjencyList[u->getId()-1][i][0]-1],adjencyList[u->getId()-1][i][1]);
         }
     }
     if(swap)
